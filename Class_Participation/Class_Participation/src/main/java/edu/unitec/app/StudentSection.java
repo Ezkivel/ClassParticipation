@@ -4,11 +4,13 @@ package edu.unitec.app;
  * Created by Henry on 11-29-13.
  */
 public class StudentSection {
-	int _StudentSectionId;
-	int _SectionId;
-	int _StudentId;
-	double _StudentSectionFinal;
-	public StudentSection(){}
+
+    private int _StudentSectionId;
+	private int _SectionId;
+	private int _StudentId;
+	private double _StudentSectionFinal;
+
+    public StudentSection(){}
 	
 	public StudentSection(int _StudentSectionId, int _SectionId,
 			int _StudentId, double _StudentSectionFinal) {

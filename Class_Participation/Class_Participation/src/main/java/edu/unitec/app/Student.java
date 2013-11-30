@@ -1,11 +1,18 @@
-package edu.unitec.fi.cp;
+package edu.unitec.app;
+
+/**
+ * Created by Henry on 11-29-13.
+ */
 
 public class Student {
-	int _StudentId;
-	String _StudentName;
-	String _StudentMajor;
-	public Student(){}
-	public Student(int _StudentId, String _StudentName, String _StudentMajor) {
+
+    private int _StudentId;
+	private String _StudentName;
+	private String _StudentMajor;
+
+    public Student(){}
+
+    public Student(int _StudentId, String _StudentName, String _StudentMajor) {
 		super();
 		this._StudentId = _StudentId;
 		this._StudentName = _StudentName;

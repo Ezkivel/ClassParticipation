@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android/Android.iml" filepath="$PROJECT_DIR$/Android/Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/Class_Participation.iml" filepath="$PROJECT_DIR$/Class_Participation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/class_participation/class_participation.iml" filepath="$PROJECT_DIR$/class_participation/class_participation.iml" />
     </modules>
   </component>
 </project>

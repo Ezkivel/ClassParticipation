@@ -23,13 +23,11 @@ public class SectionActivity extends Activity {
             case R.id.home:
                 startActivity(new Intent(this,MainActivity.class));
                 break;
-
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.section, menu);
         return true;
@@ -44,7 +42,6 @@ public class SectionActivity extends Activity {
         if (id == R.id.home) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

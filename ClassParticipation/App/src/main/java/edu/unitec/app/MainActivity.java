@@ -38,6 +38,10 @@ public class MainActivity extends Activity {
                 break;
             case R.id.about:
                 break;
+            case R.id.home:
+                startActivity(new Intent(this,MainActivity.class));
+                break;
+
         }
     }
 

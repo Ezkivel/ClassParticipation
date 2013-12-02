@@ -4,6 +4,7 @@
     <string name="app_name">ClassParticipation</string>
     <string name="courseActivity">courseActivity</string>
     <string name="sectionActivity">sectionActivity</string>
+    <string name="home">home</string>
     <string name="course">Add Course</string>
     <string name="section">Add Section</string>
     <string name="student">Add Student</string>

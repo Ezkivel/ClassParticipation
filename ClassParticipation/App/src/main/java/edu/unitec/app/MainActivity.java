@@ -3,6 +3,7 @@ package edu.unitec.app;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,20 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void onclickItem(MenuItem item) {
+        switch (item.getItemId()) {
+            case  R.id.course:
+                startActivity(new Intent(this,CourseActivity.class));
+                break;
+            case R.id.section:
+                startActivity(new Intent(this,SectionActivity.class));
+                break;
+            case R.id.student:
+                break;
+            case R.id.about:
+                break;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,9 +55,16 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.about) {
+            return true;
+        }else if(id == R.id.course){
+            return true;
+        }else if(id == R.id.student){
+            return true;
+        }else if(id == R.id.section){
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

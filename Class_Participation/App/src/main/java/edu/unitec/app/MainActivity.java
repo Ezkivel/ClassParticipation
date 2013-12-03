@@ -40,7 +40,6 @@ public class MainActivity extends Activity {
             case R.id.home:
                 startActivity(new Intent(this,MainActivity.class));
                 break;
-
         }
     }
 

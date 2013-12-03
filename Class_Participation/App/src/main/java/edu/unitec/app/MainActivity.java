@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
-import android.view.WindowManager;
 
 public class MainActivity extends Activity {
 
@@ -26,7 +25,6 @@ public class MainActivity extends Activity {
                     .commit();
         }
     }
-
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {
             case  R.id.course:

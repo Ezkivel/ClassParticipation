@@ -1,6 +1,7 @@
 package edu.unitec.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,7 +35,9 @@ public class CourseActivity extends Activity {
                 course.setCourseCode(course_code.getText().toString());
                 course.setCourseName(course_name.getText().toString());
                 course.setCourseDescription(course_description.getText().toString());
-
+                Context context = null;
+                DatabaseHandler bd = new DatabaseHandler(context);
+                bd.addCourse(course);
 
                 break;
         }

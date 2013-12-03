@@ -1,8 +1,10 @@
 package edu.unitec.app;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,17 +30,23 @@ public class CourseActivity extends Activity {
                 startActivity(new Intent(this,MainActivity.class));
                 break;
             case R.id.save:
-                Course course = new Course();
+
                 EditText course_code = (EditText) findViewById(R.id.course_code);
                 EditText course_name = (EditText) findViewById(R.id.course_name);
                 EditText course_description = (EditText) findViewById(R.id.course_description);
-                course.setCourseCode(course_code.getText().toString());
-                course.setCourseName(course_name.getText().toString());
-                course.setCourseDescription(course_description.getText().toString());
-                Context context = null;
-                DatabaseHandler bd = new DatabaseHandler(context);
-                bd.addCourse(course);
+                if( !course_code.getText().toString().isEmpty() && course_name.getText().toString().isEmpty() && course_description.getText().toString().isEmpty() ){
+                    Course course = new Course();
+                    DatabaseHandler bd = new DatabaseHandler(this);
+                    SQLiteDatabase bds = bd.getWritableDatabase();
+                    bd.onCreate(bds);
+                    course.setCourseCode(course_code.getText().toString());
+                    course.setCourseName(course_name.getText().toString());
+                    course.setCourseDescription(course_description.getText().toString());
+                    bd.addCourse(course);
+                    bd.close();
+                }else {
 
+                }
                 break;
         }
     }

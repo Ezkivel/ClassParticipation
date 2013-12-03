@@ -13,5 +13,6 @@
     <string name="course_name">insert name</string>
     <string name="course_description">insert description</string>
     <string name="save_course">save course</string>
+    <string name="listView">Course</string>
 
 </resources>

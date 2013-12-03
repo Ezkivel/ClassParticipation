@@ -10,12 +10,81 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="section"
-            android:id="@+id/button"
-            android:layout_centerVertical="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Course:"
+            android:id="@+id/textViewCourse"
+            android:layout_marginLeft="39dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerCourse"
+            android:layout_below="@+id/textViewCourse"
+            android:layout_alignLeft="@+id/textViewCourse" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Quarter:"
+            android:id="@+id/textViewQuarter"
+            android:layout_marginTop="43dp"
+            android:layout_below="@+id/spinnerCourse"
+            android:layout_alignLeft="@+id/spinnerCourse" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editTextQuarter"
+            android:layout_below="@+id/textViewQuarter"
+            android:layout_alignLeft="@+id/textViewQuarter"
+            android:layout_alignRight="@+id/textViewCourse" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Semester:"
+            android:id="@+id/textViewSemester"
+            android:layout_alignTop="@+id/textViewQuarter"
             android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editTextSemester"
+            android:layout_below="@+id/textViewSemester"
+            android:layout_alignLeft="@+id/textViewSemester"
+            android:layout_alignRight="@+id/textViewSemester" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Year:"
+            android:id="@+id/textViewYear"
+            android:layout_alignTop="@+id/textViewSemester"
+            android:layout_toRightOf="@+id/textViewSemester"
+            android:layout_marginLeft="51dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editTextYear"
+            android:layout_below="@+id/textViewYear"
+            android:layout_alignLeft="@+id/textViewYear"
+            android:layout_alignRight="@+id/textViewYear" />
+
     </RelativeLayout>
 </LinearLayout>

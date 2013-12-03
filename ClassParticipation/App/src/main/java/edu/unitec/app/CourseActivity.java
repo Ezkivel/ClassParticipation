@@ -2,10 +2,12 @@ package edu.unitec.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 /**
  * Created by Henry on 12-01-13.
@@ -24,6 +26,17 @@ public class CourseActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.home:
                 startActivity(new Intent(this,MainActivity.class));
+                break;
+            case R.id.save:
+                Course course = new Course();
+                EditText course_code = (EditText) findViewById(R.id.course_code);
+                EditText course_name = (EditText) findViewById(R.id.course_name);
+                EditText course_description = (EditText) findViewById(R.id.course_description);
+                course.setCourseCode(course_code.getText().toString());
+                course.setCourseName(course_name.getText().toString());
+                course.setCourseDescription(course_description.getText().toString());
+
+
                 break;
         }
     }

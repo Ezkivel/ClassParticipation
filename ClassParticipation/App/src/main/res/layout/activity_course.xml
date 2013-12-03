@@ -18,7 +18,7 @@
             android:id="@+id/textView"
             android:textSize="18dp"
             android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/editText3" />
+            android:layout_alignLeft="@+id/course_code" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,8 +27,8 @@
             android:textSize="18dp"
             android:id="@+id/textView2"
             android:layout_marginTop="21dp"
-            android:layout_below="@+id/editText3"
-            android:layout_alignLeft="@+id/editText" />
+            android:layout_below="@+id/course_code"
+            android:layout_alignLeft="@+id/course_name" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,8 +37,8 @@
             android:textSize="18dp"
             android:id="@+id/textView3"
             android:layout_marginTop="21dp"
-            android:layout_below="@+id/editText"
-            android:layout_alignLeft="@+id/editText" />
+            android:layout_below="@+id/course_name"
+            android:layout_alignLeft="@+id/course_name" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             android:inputType="text"
             android:ems="15"
             android:hint="@string/course_code"
-            android:id="@+id/editText3"
+            android:id="@+id/course_code"
             android:layout_below="@+id/textView"
             android:layout_alignLeft="@+id/textView2" />
 
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="15"
-            android:id="@+id/editText"
+            android:id="@+id/course_name"
             android:hint="@string/course_name"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true" />
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="15"
-            android:id="@+id/editText2"
+            android:id="@+id/course_description"
             android:hint="@string/course_description"
             android:layout_below="@+id/textView3"
             android:layout_alignLeft="@+id/textView3" />

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 /**
  * Created by Henry on 12-02-13.
@@ -15,6 +16,8 @@ public class SectionActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
 
@@ -22,6 +25,9 @@ public class SectionActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.home:
                 startActivity(new Intent(this,MainActivity.class));
+                break;
+            case R.id.save:
+                //do something
                 break;
         }
     }

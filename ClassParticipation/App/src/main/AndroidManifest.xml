@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CourseActivity" android:label="@string/courseActivity" />
+        <activity android:name=".CourseActivity" android:label="@string/courseActivity"/>
 
         <activity android:name="SectionActivity" android:label="@string/sectionActivity" />
     </application>

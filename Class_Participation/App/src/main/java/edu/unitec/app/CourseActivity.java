@@ -44,8 +44,8 @@ public class CourseActivity extends Activity {
                 Log.i("Info2",course_nam);
                 Log.i("Info3",course_desp);
 
-                if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_desp.isEmpty() ){
-                    /*Course course = new Course();
+                /*if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_desp.isEmpty() ){
+                    Course course = new Course();
                     DatabaseHandler admin = new DatabaseHandler(this);
                     SQLiteDatabase bd = admin.getWritableDatabase();
                     course.setCourseCode(course_code.getText().toString());
@@ -65,7 +65,7 @@ public class CourseActivity extends Activity {
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-                }
+                }*/
                 break;
         }
     }

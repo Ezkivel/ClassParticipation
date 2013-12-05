@@ -21,10 +21,12 @@ import java.util.List;
 /**
  * Created by Henry on 12-02-13.
  */
-public class SectionActivity extends Activity {
+public class SectionActivity extends Activity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section);
 
@@ -35,11 +37,10 @@ public class SectionActivity extends Activity {
     }
 
 
-    public void onclickItem(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                startActivity(new Intent(this,MainActivity.class));
-                break;
+    public void onclickItem(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.save:
                 saveSection();
                 //Clear and focus
@@ -116,31 +117,33 @@ public class SectionActivity extends Activity {
             }
 
             //Database
-            SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+            /*SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 
             db.execSQL("INSERT INTO section(CourseId, SectionQuarter, SectionSemester, SectionYear) VALUES(" +
             course + ", " + quarter + ", " + semester + ", " + year + ")");
 
-            db.close();
+            db.close();*/
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.section, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.home) {
+        /*if (id == R.id.home) {
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 }

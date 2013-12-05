@@ -1,5 +1,6 @@
 package edu.unitec.app;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,7 +17,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by Henry on 12-02-13.
@@ -34,6 +39,10 @@ public class SectionActivity extends Activity
 
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
 
@@ -54,9 +63,15 @@ public class SectionActivity extends Activity
 
     public void loadCourses()
     {
-        List<Course> courseList = new DatabaseHandler(getApplicationContext()).getAllCourses();
+        List<Course> courseListObject = new DatabaseHandler(getApplicationContext()).getAllCourses();
+        List<String> courseList = new ArrayList<String>();
 
-        ArrayAdapter<Course> dataAdapter = new ArrayAdapter<Course>(this, android.R.layout.simple_spinner_item, courseList);
+        for (int a = 0; a < courseListObject.size(); a++)
+        {
+            courseList.add(courseListObject.get(a).getCourseName());
+        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, courseList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ((Spinner)findViewById(R.id.spinnerCourse)).setAdapter(dataAdapter);
@@ -76,6 +91,16 @@ public class SectionActivity extends Activity
             ((EditText)findViewById(R.id.editTextYear)).requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(((EditText)findViewById(R.id.editTextYear)), InputMethodManager.SHOW_IMPLICIT);
+        }
+
+        //If there are no courses
+        else if ( ((Spinner)findViewById(R.id.spinnerCourse)).getSelectedItemPosition() < 0 )
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Empty Course");
+            alert.setMessage("There are no courses");
+            alert.setPositiveButton("OK", null);
+            alert.show();
         }
 
         else
@@ -140,10 +165,7 @@ public class SectionActivity extends Activity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        /*if (id == R.id.home) {
-            return true;
-        }*/
+        startActivity(new Intent(this, MainActivity.class));
         return super.onOptionsItemSelected(item);
     }
 }

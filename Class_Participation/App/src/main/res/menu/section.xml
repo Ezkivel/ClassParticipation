@@ -3,14 +3,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
-        android:title="@string/home"
-        android:onClick="onclickItem"
-        android:showAsAction="always"
-        android:icon="@drawable/ic_action_previous_item"
-        />
-
-    <item
         android:id="@+id/save"
         android:title="@string/save_course"
         android:onClick="onclickItem"

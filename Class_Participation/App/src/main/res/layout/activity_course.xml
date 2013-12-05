@@ -13,30 +13,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Course Code"
-            android:id="@+id/textView"
+            android:id="@+id/textViewCourse_code"
             android:textSize="18dp"
             android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/course_code" />
+            android:layout_alignLeft="@+id/textViewCourse_description"
+            android:layout_alignStart="@+id/textViewCourse_description" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Insert the course name"
+            android:text="Course Description"
             android:textSize="18dp"
-            android:id="@+id/textView2"
-            android:layout_marginTop="21dp"
-            android:layout_below="@+id/course_code"
-            android:layout_alignLeft="@+id/course_name" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Insert the course description"
-            android:textSize="18dp"
-            android:id="@+id/textView3"
-            android:layout_marginTop="21dp"
-            android:layout_below="@+id/course_name"
-            android:layout_alignLeft="@+id/course_name" />
+            android:id="@+id/textViewCourse_description"
+            android:layout_marginTop="23dp"
+            android:layout_below="@+id/editTextCourse_name"
+            android:layout_alignLeft="@+id/editTextCourse_name"
+            android:layout_alignStart="@+id/editTextCourse_name" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -44,31 +36,44 @@
             android:inputType="text"
             android:ems="15"
             android:hint="@string/course_code"
-            android:id="@+id/course_code"
-            android:layout_below="@+id/textView"
-            android:layout_alignLeft="@+id/textView2"
-            android:autoText="true"/>
+            android:id="@+id/editTextCourse_code"
+            android:autoText="true"
+            android:layout_below="@+id/textViewCourse_code"
+            android:layout_alignLeft="@+id/textViewCourse_code"
+            android:layout_alignStart="@+id/textViewCourse_code" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="15"
-            android:id="@+id/course_name"
+            android:id="@+id/editTextCourse_name"
             android:hint="@string/course_name"
-            android:layout_below="@+id/textView2"
-            android:layout_centerHorizontal="true"
-            android:autoText="true"/>
+            android:autoText="true"
+            android:layout_below="@+id/textViewCourse_name"
+            android:layout_centerHorizontal="true" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="15"
-            android:id="@+id/course_description"
+            android:id="@+id/editTextCourse_description"
             android:hint="@string/course_description"
-            android:layout_below="@+id/textView3"
-            android:layout_alignLeft="@+id/textView3"
-            android:autoText="true"/>
+            android:autoText="true"
+            android:layout_below="@+id/textViewCourse_description"
+            android:layout_alignLeft="@+id/textViewCourse_description"
+            android:layout_alignStart="@+id/textViewCourse_description" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course Name"
+            android:id="@+id/textViewCourse_name"
+            android:textSize="18dp"
+            android:layout_marginTop="17dp"
+            android:layout_below="@+id/editTextCourse_code"
+            android:layout_alignLeft="@+id/editTextCourse_name"
+            android:layout_alignStart="@+id/editTextCourse_name" />
     </RelativeLayout>
 </LinearLayout>

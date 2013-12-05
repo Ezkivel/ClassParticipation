@@ -8,9 +8,9 @@
     <string name="sections">Add Section</string>
     <string name="students">Add Student</string>
     <string name="abouts">About</string>
-    <string name="course_code">insert code</string>
-    <string name="course_name">insert name</string>
-    <string name="course_description">insert description</string>
+    <string name="course_code">Progra4</string>
+    <string name="course_name">Programación 4</string>
+    <string name="course_description">Programación web</string>
     <string name="save_course">save course</string>
     <string name="listView">Course</string>
     <string name="home">home</string>

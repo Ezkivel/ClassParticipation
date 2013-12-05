@@ -1,5 +1,6 @@
 package edu.unitec.app;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,16 +17,16 @@ public class SectionActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section);
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+       /* getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);*/
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home:
-                startActivity(new Intent(this,MainActivity.class));
-                break;
             case R.id.save:
                 //do something
                 break;
@@ -44,10 +45,7 @@ public class SectionActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.home) {
-            return true;
-        }
+        startActivity(new Intent(this,MainActivity.class));
         return super.onOptionsItemSelected(item);
     }
 }

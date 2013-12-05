@@ -6,11 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +46,8 @@
             android:hint="@string/course_code"
             android:id="@+id/course_code"
             android:layout_below="@+id/textView"
-            android:layout_alignLeft="@+id/textView2" />
+            android:layout_alignLeft="@+id/textView2"
+            android:autoText="true"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -58,7 +57,8 @@
             android:id="@+id/course_name"
             android:hint="@string/course_name"
             android:layout_below="@+id/textView2"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:autoText="true"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -68,6 +68,7 @@
             android:id="@+id/course_description"
             android:hint="@string/course_description"
             android:layout_below="@+id/textView3"
-            android:layout_alignLeft="@+id/textView3" />
+            android:layout_alignLeft="@+id/textView3"
+            android:autoText="true"/>
     </RelativeLayout>
 </LinearLayout>

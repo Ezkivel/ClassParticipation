@@ -73,20 +73,13 @@ public class MainActivity extends Activity {
             case R.id.section:
                 startActivity(new Intent(this,SectionActivity.class));
                 break;
-            case R.id.student:
-
-                break;
             case R.id.about:
-                break;
-            case R.id.home:
-                startActivity(new Intent(this,MainActivity.class));
                 break;
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -101,8 +94,6 @@ public class MainActivity extends Activity {
         if (id == R.id.about) {
             return true;
         }else if(id == R.id.course){
-            return true;
-        }else if(id == R.id.student){
             return true;
         }else if(id == R.id.section){
             return true;

@@ -17,6 +17,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 /**
  * Created by Henry on 12-01-13.
  */
@@ -38,29 +40,30 @@ public class CourseActivity extends Activity {
                 EditText course_code = (EditText) findViewById(R.id.editTextCourse_code);
                 EditText course_name = (EditText) findViewById(R.id.editTextCourse_name);
                 EditText course_description = (EditText) findViewById(R.id.editTextCourse_description);
-                String course_cod = course_code.getText().toString();
-                String course_nam = course_name.getText().toString();
-                String course_des = course_description.getText().toString();
+                String course_cod ="";
+                String course_nam="";
+                String course_des="";
+                try{
+                     course_cod = course_code.getText().toString();
+                     course_nam = course_name.getText().toString();
+                     course_des = course_description.getText().toString();
+                }catch (NullPointerException e){
+                }
 
                 Log.i("Info1",course_cod);
                 Log.i("Info2",course_nam);
                 Log.i("Info3",course_des);
 
                 if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_des.isEmpty() ){
-                    /*Course course = new Course();
-                    DatabaseHandler admin = new DatabaseHandler(this);
-                    SQLiteDatabase bd = admin.getWritableDatabase();
-                    course.setCourseCode(course_code.getText().toString());
-                    course.setCourseName(course_name.getText().toString());
-                    course.setCourseDescription(course_description.getText().toString());
-                    admin.addCourse(course);
-                    bd.close();
+                    DatabaseHandler base = new DatabaseHandler(this);
+                    Course course = new Course(course_cod, course_nam, course_des);
+                    base.addCourse(course);
                     Context context = getApplicationContext();
                     CharSequence text = "Success!!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();*/
-                    //still an error 
+                    toast.show();
+
                 }else {
                     AlertDialog.Builder alert = new AlertDialog.Builder(this);
                     alert.setTitle("Empty Field");

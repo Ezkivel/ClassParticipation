@@ -14,6 +14,6 @@
     <string name="save_course">save course</string>
     <string name="listView">Course</string>
     <string name="home">home</string>
-
+    <string name ="StudentActivity">Student</string>
 
 </resources>

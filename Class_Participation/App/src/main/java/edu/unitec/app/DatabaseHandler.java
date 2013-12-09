@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Participation";
+
     // Table Course
     private static final String TABLE_COURSE = "course";
     // Table Course Fields
@@ -71,16 +74,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         COURSE_DESC + " TEXT" + ")";
         String CREATE_SECTION_TABLE =
                 "CREATE TABLE " + TABLE_SECTION + " (" +
-                        SECT_ID + " INTEGER PRIMARY KEY, " +
+                        SECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         SECT_COURSE + " INTEGER," +
                         SECT_QTR + " INTEGER," +
                         SECT_SEM + " INTEGER," +
                         SECT_YEA + " INTEGER, " +
-                        "FOREIGN KEY(" + SECT_COURSE + ") REFERENCES " + TABLE_COURSE + "(" + COURSE_ID + "), " +
+                        "FOREIGN KEY(" + SECT_COURSE + ") REFERENCES " + TABLE_COURSE + "(" + COURSE_ID + ")" +
                         ")";
         String CREATE_STUDENT_TABLE =
                 "CREATE TABLE " + TABLE_STUDENT + " (" +
-                        STU_ID + " INTEGER PRIMARY KEY," +
+                        STU_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         STU_NAME + " TEXT," +
                         STU_MAJOR + " TEXT" + ")";
         String CREATE_STUDENTSECTION_TABLE =
@@ -88,17 +91,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         STUSEC_ID + " INTEGER PRIMARY KEY," +
                         STUSEC_SECT + " INTEGER," +
                         STUSEC_STUD + " INTEGER," +
-                        STUSEC_FINAL + " REAL, " +
+                        STUSEC_FINAL + " REAL," +
                         "FOREIGN KEY(" + STUSEC_SECT + ") REFERENCES " + TABLE_SECTION + "(" + SECT_ID + "), " +
                         "FOREIGN KEY(" + STUSEC_STUD + ") REFERENCES " + TABLE_STUDENT + "(" + STU_ID + ")" +
                         ")";
         String CREATE_PARTICIPATION_TABLE =
                 "CREATE TABLE " + TABLE_PARTICIPATION + " (" +
-                        PART_ID + " INTEGER PRIMARY KEY," +
+                        PART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         PART_STUSECT + " INTEGER," +
                         PART_GRADE + " REAL," +
                         PART_DATE + " TEXT," +
-                        PART_COMMENT + " TEXT, " +
+                        PART_COMMENT + " TEXT," +
                         "FOREIGN KEY(" + PART_STUSECT + ") REFERENCES " + TABLE_STUDENTSECTION + "(" + STUSEC_ID + ")" +
                         ")";
 
@@ -115,13 +118,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTSECTION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTICIPATION);
-
         onCreate(db);
     }
     void addCourse(Course course){
         SQLiteDatabase	db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COURSE_ID, course.getCourseId());
+        //values.put(COURSE_ID, course.getCourseId());
         values.put(COURSE_CODE, course.getCourseCode());
         values.put(COURSE_NAME, course.getCourseName());
         values.put(COURSE_DESC, course.getCourseDescription());
@@ -158,6 +160,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 course.setCourseName(cursor.getString(2));
                 course.setCourseDescription(cursor.getString(3));
                 courseList.add(course);
+            }while (cursor.moveToNext());
+        }
+        return courseList;
+    }
+
+    public List<String> getAllName_Courses(){
+        List<String> courseList = new ArrayList<String>();
+        String selectQuery  = "SELECT * FROM " + TABLE_COURSE;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do{
+                courseList.add(cursor.getString(2));
             }while (cursor.moveToNext());
         }
         return courseList;

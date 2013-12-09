@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,10 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -30,40 +33,27 @@ public class MainActivity extends Activity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
         final ListView listview = (ListView) findViewById(R.id.listView);
-        DatabaseHandler bd = new DatabaseHandler(this);
-
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile" };
-        /*Course [] vls;
-        if( bd.getCoursesCount() != -1 ){
-           vls = (Course[]) bd.getAllCourses().toArray();
-        }*/
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0).withEndAction(new Runnable() {
+        DatabaseHandler base = new DatabaseHandler(this);
+        final List<String> list;
+        try{
+            list = base.getAllName_Courses();
+            if( !list.isEmpty() ){
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                        (this, android.R.layout.simple_list_item_1, list);
+                listview.setAdapter(adapter);
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void run() {
-                        list.remove(item);
-                        adapter.notifyDataSetChanged();
-                        view.setAlpha(1);
+                    public void onItemClick(AdapterView<?> parent, final View view,int position, long id) {
+
+                       // final String item = (String) parent.getItemAtPosition(position);
+                        startActivity(new Intent(view.getContext(), StudentActivity.class));
                     }
                 });
             }
-        });
+        }catch(Exception e){
+        }
     }
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {

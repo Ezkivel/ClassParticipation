@@ -63,7 +63,7 @@ public class SectionActivity extends Activity
 
     public void loadCourses()
     {
-        List<Course> courseListObject = new DatabaseHandler(getApplicationContext()).getAllCourses();
+        List<Course> courseListObject = new DatabaseHandler(this).getAllCourses();
         List<String> courseList = new ArrayList<String>();
 
         for (int a = 0; a < courseListObject.size(); a++)

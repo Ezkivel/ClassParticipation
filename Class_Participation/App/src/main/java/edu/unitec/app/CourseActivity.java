@@ -2,6 +2,7 @@ package edu.unitec.app;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,19 +35,19 @@ public class CourseActivity extends Activity {
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                EditText course_code = (EditText) findViewById(R.id.course_code);
-                EditText course_name = (EditText) findViewById(R.id.course_name);
-                EditText course_description = (EditText) findViewById(R.id.course_description);
+                EditText course_code = (EditText) findViewById(R.id.editTextCourse_code);
+                EditText course_name = (EditText) findViewById(R.id.editTextCourse_name);
+                EditText course_description = (EditText) findViewById(R.id.editTextCourse_description);
                 String course_cod = course_code.getText().toString();
                 String course_nam = course_name.getText().toString();
-                String course_desp = course_description.getText().toString();
+                String course_des = course_description.getText().toString();
 
                 Log.i("Info1",course_cod);
                 Log.i("Info2",course_nam);
-                Log.i("Info3",course_desp);
+                Log.i("Info3",course_des);
 
-                /*if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_desp.isEmpty() ){
-                    Course course = new Course();
+                if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_des.isEmpty() ){
+                    /*Course course = new Course();
                     DatabaseHandler admin = new DatabaseHandler(this);
                     SQLiteDatabase bd = admin.getWritableDatabase();
                     course.setCourseCode(course_code.getText().toString());
@@ -57,15 +59,34 @@ public class CourseActivity extends Activity {
                     CharSequence text = "Success!!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();/*
+                    toast.show();*/
                     //still an error 
                 }else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "ERROR!!";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }*/
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    alert.setTitle("Empty Field");
+                    if( course_cod.isEmpty() ){
+                        alert.setMessage("You have to specify the course code");
+                        alert.setPositiveButton("OK", null);
+                        alert.show();
+                        ((EditText)findViewById(R.id.editTextCourse_code)).requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(((EditText)findViewById(R.id.editTextCourse_code)), InputMethodManager.SHOW_IMPLICIT);
+                    }else if (course_nam.isEmpty()){
+                        alert.setMessage("You have to specify the course name");
+                        alert.setPositiveButton("OK", null);
+                        alert.show();
+                        ((EditText)findViewById(R.id.editTextCourse_name)).requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(((EditText)findViewById(R.id.editTextCourse_name)), InputMethodManager.SHOW_IMPLICIT);
+                    }else if(course_des.isEmpty() ){
+                        alert.setMessage("You have to specify the course description");
+                        alert.setPositiveButton("OK", null);
+                        alert.show();
+                        ((EditText)findViewById(R.id.editTextCourse_description)).requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(((EditText)findViewById(R.id.editTextCourse_description)), InputMethodManager.SHOW_IMPLICIT);
+                    }
+                }
                 break;
         }
     }

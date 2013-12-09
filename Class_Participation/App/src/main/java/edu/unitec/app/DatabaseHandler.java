@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +65,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_COURSE_TABLE =
                 "CREATE TABLE " + TABLE_COURSE + " (" +
-                        COURSE_ID + " INTEGER PRIMARY KEY, " +
+                        COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COURSE_CODE + " TEXT," +
                         COURSE_NAME + " TEXT," +
                         COURSE_DESC + " TEXT" + ")";
@@ -122,7 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     void addCourse(Course course){
         SQLiteDatabase	db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //values.put(COURSE_ID, course.getCourseId());
+        values.put(COURSE_ID, course.getCourseId());
         values.put(COURSE_CODE, course.getCourseCode());
         values.put(COURSE_NAME, course.getCourseName());
         values.put(COURSE_DESC, course.getCourseDescription());

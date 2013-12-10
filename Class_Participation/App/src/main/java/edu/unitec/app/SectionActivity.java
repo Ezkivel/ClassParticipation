@@ -35,7 +35,7 @@ public class SectionActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section);
 
-        //loadCourses();
+        loadCourses();
 
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -63,13 +63,7 @@ public class SectionActivity extends Activity
 
     public void loadCourses()
     {
-        List<Course> courseListObject = new DatabaseHandler(this).getAllCourses();
-        List<String> courseList = new ArrayList<String>();
-
-        for (int a = 0; a < courseListObject.size(); a++)
-        {
-            courseList.add(courseListObject.get(a).getCourseName());
-        }
+        List<String> courseList = new DatabaseHandler(this).getAllName_Courses();
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, courseList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -142,12 +136,12 @@ public class SectionActivity extends Activity
             }
 
             //Database
-            /*SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+            SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 
             db.execSQL("INSERT INTO section(CourseId, SectionQuarter, SectionSemester, SectionYear) VALUES(" +
             course + ", " + quarter + ", " + semester + ", " + year + ")");
 
-            db.close();*/
+            db.close();
         }
     }
 

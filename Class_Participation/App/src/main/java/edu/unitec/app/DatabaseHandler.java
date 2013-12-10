@@ -103,10 +103,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         ")";
 
         db.execSQL(CREATE_COURSE_TABLE);
-        db.execSQL(CREATE_SECTION_TABLE);
+        /*db.execSQL(CREATE_SECTION_TABLE);
         db.execSQL(CREATE_STUDENT_TABLE);
         db.execSQL(CREATE_STUDENTSECTION_TABLE);
-        db.execSQL(CREATE_PARTICIPATION_TABLE);
+        db.execSQL(CREATE_PARTICIPATION_TABLE);*/
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -26,7 +26,11 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Henry on 12-02-13.
+ */
 public class MainActivity extends Activity {
+
     private List<Course> listCourse;
     private List<Section> listSection;
 
@@ -45,7 +49,7 @@ public class MainActivity extends Activity {
         populateListView();
         ClickCallback();
     }
-
+    //filling the list course and list section
     private void populateCourseList(){
         DatabaseHandler base = new DatabaseHandler(this);
         try{
@@ -54,21 +58,26 @@ public class MainActivity extends Activity {
         }catch(Exception e){
         }
     }
+    //creating the listView
     private void populateListView(){
         ArrayAdapter<Course> adapter = new MyListAdapter();
         ListView listview = (ListView) findViewById(R.id.listView);
         listview.setAdapter(adapter);
     }
+
     private void ClickCallback(){
         ListView listview = (ListView) findViewById(R.id.listView);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                startActivity(new Intent(view.getContext(), StudentActivity.class));
+               Intent intent = new Intent(view.getContext(), StudentActivity.class);
+               intent.putExtra("Id_course", ""+listCourse.get(position).getCourseId());
+               startActivity(intent);
             }
         });
     }
 
+    //class myAdapter for my personal style listView
     public class MyListAdapter extends ArrayAdapter<Course> {
        public MyListAdapter(){
          super( MainActivity.this, R.layout.item_listview, listCourse);
@@ -77,21 +86,27 @@ public class MainActivity extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent ){
             View itemView = convertView;
+            //if itemView is null we create a new one
             if(itemView == null ){
                 itemView = getLayoutInflater().inflate(R.layout.item_listview, parent, false);
             }
-            //find the course to work with
+            //find the course to work with and the section
             try{
+               //staring the current course and section
                 Course currentCourse = listCourse.get(position);
                 //Section currentSection = listSection.get(position);
+
                 //fill the view
 
+                //section id view
                 //TextView item_code = (TextView) itemView.findViewById(R.id.item_sectionId);
                 //item_code.setText(""+currentSection.get_SectionId());
 
+                //course name view
                 TextView item_name = (TextView) itemView.findViewById(R.id.item_course_name);
                 item_name.setText(""+currentCourse.getCourseName());
 
+                //course code view
                 TextView item_code = (TextView) itemView.findViewById(R.id.item_code_course);
                 item_code.setText(""+currentCourse.getCourseCode());
 

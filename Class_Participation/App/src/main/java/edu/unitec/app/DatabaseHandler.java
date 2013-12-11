@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * Created by Henry on 12-02-13.
  */
-
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;

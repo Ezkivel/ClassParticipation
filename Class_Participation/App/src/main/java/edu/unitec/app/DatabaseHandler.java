@@ -165,6 +165,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return courseList;
     }
 
+    public List<Section> getAllSections(){
+        List<Section> sectionList = new ArrayList<Section>();
+        String selectQuery  = "SELECT * FROM " + TABLE_SECTION;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do{
+                Section section = new Section();
+                section.set_SectionId(Integer.parseInt(cursor.getString(0)));
+                section.set_CourseId(Integer.parseInt(cursor.getString(1)));
+                section.set_SectionQuarter(Integer.parseInt(cursor.getString(2)));
+                section.set_SectionSemester(Integer.parseInt(cursor.getString(3)));
+                section.set_SectionYear(Integer.parseInt(cursor.getString(4)));
+                sectionList.add(section);
+            }while (cursor.moveToNext());
+        }
+        return sectionList;
+    }
+
     public List<String> getAllName_Courses(){
         List<String> courseList = new ArrayList<String>();
         String selectQuery  = "SELECT * FROM " + TABLE_COURSE;

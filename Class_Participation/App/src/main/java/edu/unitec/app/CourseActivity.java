@@ -35,24 +35,21 @@ public class CourseActivity extends Activity {
     }
 
     public void onclickItem(MenuItem item) {
-        switch (item.getItemId()) {
+        EditText course_code = (EditText) findViewById(R.id.editTextCourse_code);
+        EditText course_name = (EditText) findViewById(R.id.editTextCourse_name);
+        EditText course_description = (EditText) findViewById(R.id.editTextCourse_description);
+        String course_cod ="";
+        String course_nam="";
+        String course_des="";
+
+        switch ( item.getItemId() ) {
             case R.id.save:
-                EditText course_code = (EditText) findViewById(R.id.editTextCourse_code);
-                EditText course_name = (EditText) findViewById(R.id.editTextCourse_name);
-                EditText course_description = (EditText) findViewById(R.id.editTextCourse_description);
-                String course_cod ="";
-                String course_nam="";
-                String course_des="";
                 try{
                      course_cod = course_code.getText().toString();
                      course_nam = course_name.getText().toString();
                      course_des = course_description.getText().toString();
                 }catch (NullPointerException e){
                 }
-
-                Log.i("Info1",course_cod);
-                Log.i("Info2",course_nam);
-                Log.i("Info3",course_des);
 
                 if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_des.isEmpty() ){
                     DatabaseHandler base = new DatabaseHandler(this);
@@ -92,6 +89,10 @@ public class CourseActivity extends Activity {
                 }
                 break;
         }
+         course_code.setText("");
+         course_name.setText("");
+         course_description.setText("");
+         course_code.setActivated(true);
     }
 
     @Override

@@ -18,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -35,10 +36,8 @@ public class SectionActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section);
 
+        loadYears();
         loadCourses();
-
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -52,13 +51,28 @@ public class SectionActivity extends Activity
         {
             case R.id.save:
                 saveSection();
-                //Clear and focus
-                ((EditText)findViewById(R.id.editTextYear)).setText("");
-                ((EditText)findViewById(R.id.editTextYear)).requestFocus();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(((EditText)findViewById(R.id.editTextYear)), InputMethodManager.SHOW_IMPLICIT);
                 break;
         }
+    }
+
+    public void loadYears()
+    {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+
+        List<String> yearList = new ArrayList<String>();
+
+        for (int a = -3; a <= 3; a++)
+        {
+            yearList.add(Integer.toString(year + a));
+        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, yearList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ((Spinner)findViewById(R.id.spinnerYear)).setAdapter(dataAdapter);
+
+        ((Spinner)findViewById(R.id.spinnerYear)).setSelection(3);
     }
 
     public void loadCourses()
@@ -73,22 +87,8 @@ public class SectionActivity extends Activity
 
     public void saveSection()
     {
-        //If the editTextYear is empty
-        if ( ((EditText)findViewById(R.id.editTextYear)).getText().toString().isEmpty() )
-        {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Empty Field");
-            alert.setMessage("You have to specify a year");
-            alert.setPositiveButton("OK", null);
-            alert.show();
-
-            ((EditText)findViewById(R.id.editTextYear)).requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(((EditText)findViewById(R.id.editTextYear)), InputMethodManager.SHOW_IMPLICIT);
-        }
-
         //If there are no courses
-        else if ( ((Spinner)findViewById(R.id.spinnerCourse)).getSelectedItemPosition() < 0 )
+        if ( ((Spinner)findViewById(R.id.spinnerCourse)).getSelectedItemPosition() < 0 )
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Empty Course");
@@ -100,8 +100,8 @@ public class SectionActivity extends Activity
         else
         {
             int quarter = 0, semester = 0;
+            int year = Integer.parseInt(((Spinner)findViewById(R.id.spinnerYear)).getSelectedItem().toString());
             int course = ((Spinner)findViewById(R.id.spinnerCourse)).getSelectedItemPosition() + 1;
-            int year = Integer.parseInt(((EditText)findViewById(R.id.editTextYear)).getText().toString());
 
             //Checks which quarter was selected
             if ( ((RadioButton)findViewById(R.id.radioButtonQuarter1)).isSelected() )

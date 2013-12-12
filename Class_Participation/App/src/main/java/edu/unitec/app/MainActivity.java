@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -19,6 +21,7 @@ import android.widget.ListView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -39,6 +42,7 @@ public class MainActivity extends Activity {
         final List<String> list;
         try{
             list = base.getAllName_Courses();
+            //list = getCurrentSectionCoursesName();
             if( !list.isEmpty() ){
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>
                         (this, android.R.layout.simple_list_item_1, list);
@@ -55,6 +59,91 @@ public class MainActivity extends Activity {
         }catch(Exception e){
         }
     }
+
+    public int getCurrentYear()
+    {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR);
+    }
+
+    public int getCurrentSemester()
+    {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH); //January == 0
+
+        //June == 5
+        if ( month <= 5 )
+        {
+            return 1;
+        }
+
+        return 2;
+    }
+
+    public int getCurrentQuarter()
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        int currentMonth = calendar.get(Calendar.MONTH); //January == 0
+        int currentSemester = getCurrentSemester();
+        int currentQuarter = 0;
+
+        if ( currentSemester == 1 )
+        {
+            if ( currentMonth <= 2 )//January(0), February(1), March(2)
+            {
+                currentQuarter = 1;
+            }
+
+            //else
+            currentQuarter = 2;
+        }
+
+        else if ( currentSemester == 2 )
+        {
+            if ( currentMonth <= 8 ) //(July(6), August(7), September(8)
+            {
+                currentQuarter = 3;
+            }
+
+            //else
+            currentQuarter = 4;
+        }
+
+        return currentQuarter;
+    }
+
+    public List<String> getCurrentSectionCoursesName()
+    {
+        int year = getCurrentYear();
+        int semester = getCurrentSemester();
+        int quarter = getCurrentQuarter();
+        List<String> coursesNameList = new ArrayList<String>();
+
+        SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+
+        Cursor cursorCoursesId = db.rawQuery("SELECT CourseId FROM section WHERE SectionQuarter = " +
+                                             quarter + " AND SectionYear = " + year, null);
+
+        if ( cursorCoursesId.moveToFirst() )
+        {
+            while ( cursorCoursesId.moveToNext() )
+            {
+                Cursor cursorCoursesName = db.rawQuery("SELECT CourseName FROM course WHERE CourseId = " +
+                                                 cursorCoursesId.getInt(0), null);
+
+                if ( cursorCoursesName.moveToFirst() )
+                {
+                    coursesNameList.add(cursorCoursesName.getString(0));
+                }
+            }
+        }
+
+        db.close();
+
+        return coursesNameList;
+    }
+
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {
             case  R.id.course:

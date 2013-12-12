@@ -45,12 +45,12 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
-        populateCourseList();
+        populateCourseList_SectionList();
         populateListView();
         ClickCallback();
     }
     //filling the list course and list section
-    private void populateCourseList(){
+    private void populateCourseList_SectionList(){
         DatabaseHandler base = new DatabaseHandler(this);
         try{
             listCourse = base.getAllCourses();
@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
         ListView listview = (ListView) findViewById(R.id.listView);
         listview.setAdapter(adapter);
     }
-
+    //event clicking on one item of the listview
     private void ClickCallback(){
         ListView listview = (ListView) findViewById(R.id.listView);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,13 +76,11 @@ public class MainActivity extends Activity {
             }
         });
     }
-
     //class myAdapter for my personal style listView
     public class MyListAdapter extends ArrayAdapter<Course> {
        public MyListAdapter(){
          super( MainActivity.this, R.layout.item_listview, listCourse);
        }
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent ){
             View itemView = convertView;
@@ -93,9 +91,11 @@ public class MainActivity extends Activity {
             //find the course to work with and the section
             try{
                //staring the current course and section
+                /*ariel validar aka el anho o lo podes hacer en populateCourseList_SectionList creo que en
+                populateCourseList_SectionList seria menor*/
+
                 Course currentCourse = listCourse.get(position);
                 //Section currentSection = listSection.get(position);
-
                 //fill the view
 
                 //section id view

@@ -2,7 +2,9 @@ package edu.unitec.app;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,47 +19,35 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.ListView;
 
 import java.io.File;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends Activity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null)
+        {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
 
-        final ListView listview = (ListView) findViewById(R.id.listView);
-        DatabaseHandler base = new DatabaseHandler(this);
-        final List<String> list;
-        try{
-            list = base.getAllName_Courses();
-            //list = getCurrentSectionCoursesName();
-            if( !list.isEmpty() ){
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (this, android.R.layout.simple_list_item_1, list);
-                listview.setAdapter(adapter);
-                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, final View view,int position, long id) {
-
-                       // final String item = (String) parent.getItemAtPosition(position);
-                        startActivity(new Intent(view.getContext(), StudentActivity.class));
-                    }
-                });
-            }
-        }catch(Exception e){
-        }
+        showCoursesNames();
+        //populateListView();
+        //ClickCallback();
     }
 
     public int getCurrentYear()
@@ -113,36 +103,167 @@ public class MainActivity extends Activity {
         return currentQuarter;
     }
 
-    public List<String> getCurrentSectionCoursesName()
+    public List<Section> getCurrentSectionsList()
     {
         int year = getCurrentYear();
-        int semester = getCurrentSemester();
         int quarter = getCurrentQuarter();
-        List<String> coursesNameList = new ArrayList<String>();
+        int semester = getCurrentSemester();
+
+        List<Section> sectionsList = new ArrayList<Section>();
 
         SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 
-        Cursor cursorCoursesId = db.rawQuery("SELECT CourseId FROM section WHERE SectionQuarter = " +
-                                             quarter + " AND SectionYear = " + year, null);
+        Cursor cursorSectionIdAndCourseId = db.rawQuery("SELECT SectionId, CourseId FROM section WHERE SectionQuarter = " +
+                                       quarter + " AND SectionYear = " + year, null);
 
-        if ( cursorCoursesId.moveToFirst() )
+        if ( cursorSectionIdAndCourseId.moveToFirst() )
         {
-            while ( cursorCoursesId.moveToNext() )
+            do
             {
-                Cursor cursorCoursesName = db.rawQuery("SELECT CourseName FROM course WHERE CourseId = " +
-                                                 cursorCoursesId.getInt(0), null);
+                Section section = new Section(cursorSectionIdAndCourseId.getInt(0), cursorSectionIdAndCourseId.getInt(1),
+                                              quarter, semester, year);
 
-                if ( cursorCoursesName.moveToFirst() )
-                {
-                    coursesNameList.add(cursorCoursesName.getString(0));
-                }
+                sectionsList.add(section);
+
+            } while ( cursorSectionIdAndCourseId.moveToNext() );
+        }
+
+        db.close();
+
+        return sectionsList;
+    }
+
+    public List<String> getCurrentCoursesNamesList()
+    {
+        List<Section> sectionsList = getCurrentSectionsList();
+        List<String> coursesNamesList = new ArrayList<String>();
+
+        SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+
+        for (int a = 0; a < sectionsList.size(); a++)
+        {
+            Cursor cursorCourseName = db.rawQuery("SELECT CourseName FROM course WHERE CourseId = " +
+                                                    sectionsList.get(a).get_CourseId(), null);
+
+            if ( cursorCourseName.moveToFirst() )
+            {
+                coursesNamesList.add(cursorCourseName.getString(0));
             }
         }
 
         db.close();
 
-        return coursesNameList;
+        return coursesNamesList;
     }
+
+    public void showCoursesNames()
+    {
+        final ListView listview = (ListView) findViewById(R.id.listView);
+        final List<String> coursesNamesList;
+
+        try
+        {
+            coursesNamesList = getCurrentCoursesNamesList();
+
+            if( !coursesNamesList.isEmpty() )
+            {
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                        (this, android.R.layout.simple_list_item_1, coursesNamesList);
+
+                listview.setAdapter(adapter);
+
+                /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, final View view,int position, long id) {
+
+                        // final String item = (String) parent.getItemAtPosition(position);
+                        startActivity(new Intent(view.getContext(), StudentActivity.class));
+                    }
+                });*/
+            }
+        }
+
+        catch(Exception e)
+        {
+        }
+    }
+
+    //creating the listView
+    /*private void populateListView()
+    {
+        ArrayAdapter<Course> adapter = new MyListAdapter();
+        ListView listview = (ListView) findViewById(R.id.listView);
+        listview.setAdapter(adapter);
+    }
+
+    //event clicking on one item of the listview
+    private void ClickCallback()
+    {
+        ListView listview = (ListView) findViewById(R.id.listView);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
+            {
+                Intent intent = new Intent(view.getContext(), StudentActivity.class);
+                intent.putExtra("Id_course", ""+listCourse.get(position).getCourseId());
+                startActivity(intent);
+            }
+        });
+     }*/
+
+
+
+    //class myAdapter for my personal style listView
+    /*public class MyListAdapter extends ArrayAdapter<Course>
+    {
+        public MyListAdapter()
+        {
+            super( MainActivity.this, R.layout.item_listview, listCourse);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent )
+        {
+            View itemView = convertView;
+
+            //if itemView is null we create a new one
+            if(itemView == null )
+            {
+                itemView = getLayoutInflater().inflate(R.layout.item_listview, parent, false);
+            }
+
+            //find the course to work with and the section
+            try
+            {
+                //staring the current course and section
+                Course currentCourse = listCourse.get(position);
+
+                //Section currentSection = listSection.get(position);
+                //fill the view
+
+                //section id view
+                //TextView item_code = (TextView) itemView.findViewById(R.id.item_sectionId);
+                //item_code.setText(""+currentSection.get_SectionId());
+
+                //course name view
+                TextView item_name = (TextView) itemView.findViewById(R.id.item_course_name);
+                item_name.setText(""+currentCourse.getCourseName());
+
+                //course code view
+                TextView item_code = (TextView) itemView.findViewById(R.id.item_code_course);
+                item_code.setText(""+currentCourse.getCourseCode());
+
+            }
+
+            catch(Exception e)
+            {
+            }
+
+            return itemView;
+        }
+    }*/
 
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {

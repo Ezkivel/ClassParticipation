@@ -85,6 +85,35 @@ public class SectionActivity extends Activity
         ((Spinner)findViewById(R.id.spinnerCourse)).setAdapter(dataAdapter);
     }
 
+    public boolean isValidQuarter()
+    {
+        if ( ((RadioButton)findViewById(R.id.radioButtonQuarter1)).isChecked() &&
+             ((RadioButton)findViewById(R.id.radioButtonSemester1)).isChecked() )
+        {
+            return true;
+        }
+
+        if ( ((RadioButton)findViewById(R.id.radioButtonQuarter2)).isChecked() &&
+             ((RadioButton)findViewById(R.id.radioButtonSemester1)).isChecked() )
+        {
+            return true;
+        }
+
+        if ( ((RadioButton)findViewById(R.id.radioButtonQuarter3)).isChecked() &&
+             ((RadioButton)findViewById(R.id.radioButtonSemester2)).isChecked() )
+        {
+            return true;
+        }
+
+        if ( ((RadioButton)findViewById(R.id.radioButtonQuarter4)).isChecked() &&
+             ((RadioButton)findViewById(R.id.radioButtonSemester2)).isChecked() )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public void saveSection()
     {
         //If there are no courses
@@ -97,24 +126,33 @@ public class SectionActivity extends Activity
             alert.show();
         }
 
+        else if ( !isValidQuarter() )
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Invalid Quarter");
+            alert.setMessage("The quarter is not valid");
+            alert.setPositiveButton("OK", null);
+            alert.show();
+        }
+
         else
         {
             int quarter = 0, semester = 0;
             int year = Integer.parseInt(((Spinner)findViewById(R.id.spinnerYear)).getSelectedItem().toString());
-            int course = ((Spinner)findViewById(R.id.spinnerCourse)).getSelectedItemPosition() + 1;
+            int courseId = ((Spinner)findViewById(R.id.spinnerCourse)).getSelectedItemPosition() + 1;
 
             //Checks which quarter was selected
-            if ( ((RadioButton)findViewById(R.id.radioButtonQuarter1)).isSelected() )
+            if ( ((RadioButton)findViewById(R.id.radioButtonQuarter1)).isChecked() )
             {
                 quarter = 1;
             }
 
-            else if ( ((RadioButton)findViewById(R.id.radioButtonQuarter2)).isSelected() )
+            else if ( ((RadioButton)findViewById(R.id.radioButtonQuarter2)).isChecked() )
             {
                 quarter = 2;
             }
 
-            else if ( ((RadioButton)findViewById(R.id.radioButtonQuarter3)).isSelected() )
+            else if ( ((RadioButton)findViewById(R.id.radioButtonQuarter3)).isChecked() )
             {
                 quarter = 3;
             }
@@ -125,7 +163,7 @@ public class SectionActivity extends Activity
             }
 
             //Checks which semester was selected
-            if ( ((RadioButton)findViewById(R.id.radioButtonSemester1)).isSelected() )
+            if ( ((RadioButton)findViewById(R.id.radioButtonSemester1)).isChecked() )
             {
                 semester = 1;
             }
@@ -139,7 +177,7 @@ public class SectionActivity extends Activity
             SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 
             db.execSQL("INSERT INTO section(CourseId, SectionQuarter, SectionSemester, SectionYear) VALUES(" +
-            course + ", " + quarter + ", " + semester + ", " + year + ")");
+            courseId + ", " + quarter + ", " + semester + ", " + year + ")");
 
             db.close();
         }

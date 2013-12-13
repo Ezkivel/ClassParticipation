@@ -11,18 +11,20 @@ import android.view.MenuItem;
 /**
  * Created by Henry on 12-08-13.
  */
-public class StudentActivity extends Activity {
+public class StudentActivity extends Activity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        //course id
+
         Intent intent = getIntent();
         Section currentSection = (Section)intent.getSerializableExtra("Section");
-        String course_name = intent.getStringExtra("course");
+        String course_name = intent.getStringExtra("Course");
         setTitle(course_name);
         Log.i("Section", currentSection.toString());
     }

@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -172,6 +174,12 @@ public class SectionActivity extends Activity
             courseId + ", " + quarter + ", " + semester + ", " + year + ")");
 
             db.close();
+
+            //Show a message
+            CharSequence message = "Success!!";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getApplicationContext(), message, duration);
+            toast.show();
         }
     }
 

@@ -47,7 +47,8 @@ public class CourseActivity extends Activity {
                 }catch (NullPointerException e){
                 }
 
-                if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_des.isEmpty() ){
+                if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_des.isEmpty() )
+                {
                     DatabaseHandler base = new DatabaseHandler(this);
                     Course course = new Course(course_cod, course_nam, course_des);
                     base.addCourse(course);
@@ -57,7 +58,17 @@ public class CourseActivity extends Activity {
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
 
-                }else {
+                    course_code.setText("");
+                    course_name.setText("");
+                    course_description.setText("");
+
+                    ((EditText)findViewById(R.id.editTextCourse_code)).requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(((EditText)findViewById(R.id.editTextCourse_code)), InputMethodManager.SHOW_IMPLICIT);
+                }
+
+                else
+                {
                     AlertDialog.Builder alert = new AlertDialog.Builder(this);
                     alert.setTitle("Empty Field");
                     if( course_cod.isEmpty() ){
@@ -85,10 +96,6 @@ public class CourseActivity extends Activity {
                 }
                 break;
         }
-         course_code.setText("");
-         course_name.setText("");
-         course_description.setText("");
-         course_code.setActivated(true);
     }
 
     @Override

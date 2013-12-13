@@ -99,24 +99,31 @@ public class MainActivity extends Activity
 
         List<Section> sectionsList = new ArrayList<Section>();
 
-        SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-
-        Cursor cursorSectionIdAndCourseId = db.rawQuery("SELECT SectionId, CourseId FROM section WHERE SectionQuarter = " +
-                                       quarter + " AND SectionYear = " + year + " ORDER BY SectionId ASC", null);
-
-        if ( cursorSectionIdAndCourseId.moveToFirst() )
+        try
         {
-            do
+            SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+
+            Cursor cursorSectionIdAndCourseId = db.rawQuery("SELECT SectionId, CourseId FROM section WHERE SectionQuarter = " +
+                    quarter + " AND SectionYear = " + year + " ORDER BY SectionId ASC", null);
+
+            if ( cursorSectionIdAndCourseId.moveToFirst() )
             {
-                Section section = new Section(cursorSectionIdAndCourseId.getInt(0), cursorSectionIdAndCourseId.getInt(1),
-                                              quarter, semester, year);
+                do
+                {
+                    Section section = new Section(cursorSectionIdAndCourseId.getInt(0), cursorSectionIdAndCourseId.getInt(1),
+                            quarter, semester, year);
 
-                sectionsList.add(section);
+                    sectionsList.add(section);
 
-            } while ( cursorSectionIdAndCourseId.moveToNext() );
+                } while ( cursorSectionIdAndCourseId.moveToNext() );
+            }
+
+            db.close();
         }
 
-        db.close();
+        catch (Exception e)
+        {
+        }
 
         return sectionsList;
     }
@@ -164,7 +171,7 @@ public class MainActivity extends Activity
             {
                 Intent intent = new Intent(view.getContext(), StudentActivity.class);
                 intent.putExtra("Section", getCurrentSectionsList().get(position));
-                intent.putExtra("course", getCurrentCoursesNamesList().get(position));
+                intent.putExtra("Course", getCurrentCoursesNamesList().get(position));
                 startActivity(intent);
             }
         });
@@ -173,8 +180,6 @@ public class MainActivity extends Activity
     //class myAdapter for my personal style listView
     public class MyListAdapter extends ArrayAdapter<String>
     {
-
-
         public MyListAdapter()
         {
             super( MainActivity.this, R.layout.item_listview, getCurrentCoursesNamesList());
@@ -192,28 +197,29 @@ public class MainActivity extends Activity
             //find the course to work with and the section
             try
             {
-                List<Section> sectionIdList = getCurrentSectionsList();
+                List<Section> sectionsList = getCurrentSectionsList();
 
                 //course name view
-                TextView item_name = (TextView) itemView.findViewById(R.id.item_course_name);
+                TextView item_name = (TextView)itemView.findViewById(R.id.item_course_name);
                 item_name.setText("" + getCurrentCoursesNamesList().get(position));
 
-                //section id view
-                TextView item_IdSection = (TextView) itemView.findViewById(R.id.item_idSection);
-                item_IdSection.setText("Section id: " + sectionIdList.get(position).get_SectionId());
-
                 //section year view
-                TextView item_year = (TextView) itemView.findViewById(R.id.item_year);
-                item_year.setText(""+sectionIdList.get(position).get_SectionYear());
+                TextView item_year = (TextView)itemView.findViewById(R.id.item_year);
+                item_year.setText("" + sectionsList.get(position).get_SectionYear());
 
                 //section quarter view
-                TextView item_quarter = (TextView) itemView.findViewById(R.id.item_quarter);
-                item_quarter.setText("Quarter: "+sectionIdList.get(position).get_SectionQuarter());
+                TextView item_quarter = (TextView)itemView.findViewById(R.id.item_quarter);
+                item_quarter.setText("Quarter: " + sectionsList.get(position).get_SectionQuarter());
 
+                //section id view
+                TextView item_IdSection = (TextView)itemView.findViewById(R.id.item_idSection);
+                item_IdSection.setText("Section id: " + sectionsList.get(position).get_SectionId());
             }
+
             catch(Exception e)
             {
             }
+
             return itemView;
         }
     }

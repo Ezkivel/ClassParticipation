@@ -22,15 +22,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="item_code_course"
-        android:id="@+id/item_code_course"
-        android:layout_below="@+id/item_image"
-        android:layout_alignLeft="@+id/item_course_name"
-        android:layout_alignStart="@+id/item_course_name" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Name of the course"
         android:id="@+id/item_course_name"
@@ -43,11 +34,30 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="item_sectionId"
-        android:id="@+id/textView"
-        android:layout_alignTop="@+id/item_code_course"
-        android:layout_alignParentRight="true"
+        android:id="@+id/item_idSection"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="27dp" />
+        android:layout_below="@+id/item_image"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="35dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="year"
+        android:id="@+id/item_year"
+        android:layout_alignTop="@+id/item_quarter"
+        android:layout_toRightOf="@+id/item_image" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="quarter"
+        android:id="@+id/item_quarter"
+        android:layout_alignTop="@+id/item_idSection"
+        android:layout_alignLeft="@+id/item_course_name"
+        android:layout_marginLeft="52dp" />
 
 </RelativeLayout>
 

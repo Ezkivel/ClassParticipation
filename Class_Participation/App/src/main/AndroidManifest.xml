@@ -26,7 +26,7 @@
 
         <activity android:name="SectionActivity" android:label="@string/sectionActivity"/>
 
-        <activity android:name="StudentActivity" android:label="@string/StudentActivity"/>
+        <activity android:name="StudentActivity" android:label="Student"/>
     </application>
 
 </manifest>

@@ -1,9 +1,11 @@
 package edu.unitec.app;
 
+import java.io.Serializable;
+
 /**
  * Created by Henry on 11-29-13.
  */
-public class Section
+public class Section implements Serializable
 {
 
     private int _SectionId;
@@ -63,4 +65,9 @@ public class Section
     {
 		this._SectionYear = _SectionYear;
 	}
+
+    @Override
+    public String toString(){
+        return _SectionId+","+_CourseId+","+_SectionQuarter+","+_SectionSemester+","+_SectionYear;
+    }
 }

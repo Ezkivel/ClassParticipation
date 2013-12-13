@@ -1,31 +1,20 @@
 package edu.unitec.app;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ListView;
-
-import java.io.File;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -45,9 +34,8 @@ public class MainActivity extends Activity
                     .commit();
         }
 
-        showCoursesNames();
-        //populateListView();
-        //ClickCallback();
+        populateListView();
+        ClickCallback();
     }
 
     public int getCurrentYear()
@@ -156,47 +144,15 @@ public class MainActivity extends Activity
         return coursesNamesList;
     }
 
-    public void showCoursesNames()
-    {
-        final ListView listview = (ListView) findViewById(R.id.listView);
-        final List<String> coursesNamesList;
-
-        try
-        {
-            coursesNamesList = getCurrentCoursesNamesList();
-
-            if( !coursesNamesList.isEmpty() )
-            {
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                        (this, android.R.layout.simple_list_item_1, coursesNamesList);
-
-                listview.setAdapter(adapter);
-
-                /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, final View view,int position, long id) {
-
-                        // final String item = (String) parent.getItemAtPosition(position);
-                        startActivity(new Intent(view.getContext(), StudentActivity.class));
-                    }
-                });*/
-            }
-        }
-
-        catch(Exception e)
-        {
-        }
-    }
-
     //creating the listView
-    /*private void populateListView()
+    private void populateListView()
     {
-        ArrayAdapter<Course> adapter = new MyListAdapter();
+        ArrayAdapter<String> adapter = new MyListAdapter();
         ListView listview = (ListView) findViewById(R.id.listView);
         listview.setAdapter(adapter);
     }
 
-    //event clicking on one item of the listview
+    //event clicking on one item of the list view
     private void ClickCallback()
     {
         ListView listview = (ListView) findViewById(R.id.listView);
@@ -207,63 +163,60 @@ public class MainActivity extends Activity
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
             {
                 Intent intent = new Intent(view.getContext(), StudentActivity.class);
-                intent.putExtra("Id_course", ""+listCourse.get(position).getCourseId());
+                intent.putExtra("Section", getCurrentSectionsList().get(position));
+                intent.putExtra("course", getCurrentCoursesNamesList().get(position));
                 startActivity(intent);
             }
         });
-     }*/
-
-
+     }
 
     //class myAdapter for my personal style listView
-    /*public class MyListAdapter extends ArrayAdapter<Course>
+    public class MyListAdapter extends ArrayAdapter<String>
     {
+
+
         public MyListAdapter()
         {
-            super( MainActivity.this, R.layout.item_listview, listCourse);
+            super( MainActivity.this, R.layout.item_listview, getCurrentCoursesNamesList());
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent )
         {
             View itemView = convertView;
-
             //if itemView is null we create a new one
             if(itemView == null )
             {
                 itemView = getLayoutInflater().inflate(R.layout.item_listview, parent, false);
             }
-
             //find the course to work with and the section
             try
             {
-                //staring the current course and section
-                Course currentCourse = listCourse.get(position);
-
-                //Section currentSection = listSection.get(position);
-                //fill the view
-
-                //section id view
-                //TextView item_code = (TextView) itemView.findViewById(R.id.item_sectionId);
-                //item_code.setText(""+currentSection.get_SectionId());
+                List<Section> sectionIdList = getCurrentSectionsList();
 
                 //course name view
                 TextView item_name = (TextView) itemView.findViewById(R.id.item_course_name);
-                item_name.setText(""+currentCourse.getCourseName());
+                item_name.setText("" + getCurrentCoursesNamesList().get(position));
 
-                //course code view
-                TextView item_code = (TextView) itemView.findViewById(R.id.item_code_course);
-                item_code.setText(""+currentCourse.getCourseCode());
+                //section id view
+                TextView item_IdSection = (TextView) itemView.findViewById(R.id.item_idSection);
+                item_IdSection.setText("Section id: " + sectionIdList.get(position).get_SectionId());
+
+                //section year view
+                TextView item_year = (TextView) itemView.findViewById(R.id.item_year);
+                item_year.setText(""+sectionIdList.get(position).get_SectionYear());
+
+                //section quarter view
+                TextView item_quarter = (TextView) itemView.findViewById(R.id.item_quarter);
+                item_quarter.setText("Quarter: "+sectionIdList.get(position).get_SectionQuarter());
 
             }
-
             catch(Exception e)
             {
             }
-
             return itemView;
         }
-    }*/
+    }
 
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {

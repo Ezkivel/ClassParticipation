@@ -114,7 +114,7 @@ public class MainActivity extends Activity
         SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 
         Cursor cursorSectionIdAndCourseId = db.rawQuery("SELECT SectionId, CourseId FROM section WHERE SectionQuarter = " +
-                                       quarter + " AND SectionYear = " + year, null);
+                                       quarter + " AND SectionYear = " + year + " ORDER BY SectionId ASC", null);
 
         if ( cursorSectionIdAndCourseId.moveToFirst() )
         {
@@ -143,7 +143,7 @@ public class MainActivity extends Activity
         for (int a = 0; a < sectionsList.size(); a++)
         {
             Cursor cursorCourseName = db.rawQuery("SELECT CourseName FROM course WHERE CourseId = " +
-                                                    sectionsList.get(a).get_CourseId(), null);
+                                                    sectionsList.get(a).get_CourseId() + " ORDER BY CourseId ASC", null);
 
             if ( cursorCourseName.moveToFirst() )
             {

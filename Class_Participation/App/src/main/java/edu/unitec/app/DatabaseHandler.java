@@ -148,7 +148,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     public List<Course> getAllCourses(){
         List<Course> courseList = new ArrayList<Course>();
-        String selectQuery  = "SELECT * FROM " + TABLE_COURSE;
+        String selectQuery  = "SELECT * FROM " + TABLE_COURSE + " ORDER BY " + COURSE_ID + " ASC";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
@@ -166,7 +166,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<Section> getAllSections(){
         List<Section> sectionList = new ArrayList<Section>();
-        String selectQuery  = "SELECT * FROM " + TABLE_SECTION;
+        String selectQuery  = "SELECT * FROM " + TABLE_SECTION + " ORDER BY " + SECT_ID + " ASC";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
@@ -185,7 +185,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<String> getAllName_Courses(){
         List<String> courseList = new ArrayList<String>();
-        String selectQuery  = "SELECT * FROM " + TABLE_COURSE;
+        String selectQuery  = "SELECT * FROM " + TABLE_COURSE + " ORDER BY " + COURSE_ID + " ASC";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){

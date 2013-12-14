@@ -27,6 +27,7 @@
         <activity android:name="SectionActivity" android:label="@string/sectionActivity"/>
 
         <activity android:name="StudentActivity" android:label="Student"/>
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     </application>
 
 </manifest>

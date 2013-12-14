@@ -5,7 +5,6 @@ package edu.unitec.app;
  */
 public class Student
 {
-
     private int _StudentId;
 	private String _StudentName;
 	private String _StudentMajor;
@@ -49,4 +48,9 @@ public class Student
     {
 		this._StudentMajor = _StudentMajor;
 	}
+
+    @Override
+    public String toString(){
+        return get_StudentId()+", "+ get_StudentName()+", "+get_StudentMajor()+"/n";
+    }
 }

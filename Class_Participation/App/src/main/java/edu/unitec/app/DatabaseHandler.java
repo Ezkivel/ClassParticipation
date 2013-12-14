@@ -43,7 +43,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String STU_MAJOR = "StudentMajor";
 
     // Table Students Per Section
-    private static final String TABLE_STUDENTSECTION = "studentsection";
+    private static final String TABLE_STUDENTSECTION = "studentSection";
     // Table Students Per Section Fields
     private static final String STUSEC_ID = "StudentSectionId";
     private static final String STUSEC_SECT = "SectionId";
@@ -87,7 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         STU_MAJOR + " TEXT" + ")";
         String CREATE_STUDENTSECTION_TABLE =
                 "CREATE TABLE " + TABLE_STUDENTSECTION + " (" +
-                        STUSEC_ID + " INTEGER PRIMARY KEY," +
+                        STUSEC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         STUSEC_SECT + " INTEGER," +
                         STUSEC_STUD + " INTEGER," +
                         STUSEC_FINAL + " REAL," +
@@ -129,6 +129,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_COURSE, null, values);
         db.close();
     }
+
+    void addStudentTable(Student student, Section section){
+        SQLiteDatabase	db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(STUSEC_SECT, section.get_SectionId());
+        values.put(STUSEC_STUD, student.get_StudentId());
+        values.put(STUSEC_FINAL, 0);
+        db.insert(TABLE_STUDENTSECTION, null, values);
+        db.close();
+    }
+
+    void addStudent(Student student){
+        SQLiteDatabase	db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(STU_ID, student.get_StudentId());
+        values.put(STU_NAME, student.get_StudentName());
+        values.put(STU_MAJOR, student.get_StudentMajor());
+        db.insert(TABLE_STUDENT, null, values);
+        db.close();
+    }
+
     Course getCourse(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(

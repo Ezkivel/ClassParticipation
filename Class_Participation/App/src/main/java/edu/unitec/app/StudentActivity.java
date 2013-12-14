@@ -40,6 +40,7 @@ public class StudentActivity extends Activity
         setContentView(R.layout.activity_student);
 
         ActionBar actionBar = getActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
@@ -57,6 +58,7 @@ public class StudentActivity extends Activity
         getMenuInflater().inflate(R.menu.student, menu);
         MenuItem a = menu.findItem(R.id.save_students);
         if(!getCurrentStudentNamesList().isEmpty() ){
+            assert a != null;
             a.setVisible(false);
         }
         return true;
@@ -91,6 +93,7 @@ public class StudentActivity extends Activity
                 if (resultCode == RESULT_OK){
                     try{
                         Uri uri = data.getData();
+                        assert uri != null;
                         String filePath = uri.getPath();
                         Log.i("path", filePath);
 
@@ -106,14 +109,14 @@ public class StudentActivity extends Activity
                         if( getCurrentStudentNamesList().isEmpty() ){
 
                             if( !list1.containsAll( list2 ) ){
-                                for(int i = 0; i < student.size(); i++ ){
-                                    bd.addStudent(student.get(i));
-                                    bd.addStudentTable(student.get(i),currentSection);
+                                for (Student aStudent : student) {
+                                    bd.addStudent(aStudent);
+                                    bd.addStudentTable(aStudent, currentSection);
                                 }
                                 this.recreate();
                             }else{
-                                for(int i = 0; i < student.size(); i++ ){
-                                    bd.addStudentTable(student.get(i),currentSection);
+                                for (Student aStudent : student) {
+                                    bd.addStudentTable(aStudent, currentSection);
                                 }
                                 this.recreate();
                                 Log.i("student","students list already exist");
@@ -121,7 +124,7 @@ public class StudentActivity extends Activity
                         }else{
                             Log.i("Nothing","do nothing");
                         }
-                    }catch(Exception e){
+                    }catch(Exception ignored){
                     }
                 }
                 break;

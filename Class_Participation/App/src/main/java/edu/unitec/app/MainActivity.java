@@ -111,7 +111,7 @@ public class MainActivity extends Activity
             db.close();
         }
 
-        catch (Exception e)
+        catch (Exception ignored)
         {
         }
         return sectionsList;

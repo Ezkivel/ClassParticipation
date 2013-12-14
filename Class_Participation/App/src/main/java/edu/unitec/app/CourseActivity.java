@@ -29,6 +29,7 @@ public class CourseActivity extends Activity {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         ActionBar actionBar = getActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
 
@@ -49,7 +50,7 @@ public class CourseActivity extends Activity {
                      course_cod = course_code.getText().toString();
                      course_nam = course_name.getText().toString();
                      course_des = course_description.getText().toString();
-                }catch (NullPointerException e){
+                }catch (NullPointerException ignored){
                 }
 
                 if( !course_cod.isEmpty() && !course_nam.isEmpty() && !course_des.isEmpty() )
@@ -60,6 +61,7 @@ public class CourseActivity extends Activity {
                     Context context = getApplicationContext();
                     CharSequence text = "Success!!";
                     int duration = Toast.LENGTH_SHORT;
+                    assert context != null;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
 

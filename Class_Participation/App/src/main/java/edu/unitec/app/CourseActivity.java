@@ -31,8 +31,6 @@ public class CourseActivity extends Activity {
         ActionBar actionBar = getActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
     }
 
     public void onclickItem(MenuItem item) {
@@ -109,6 +107,7 @@ public class CourseActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.course, menu);
+
         return true;
     }
 
@@ -117,7 +116,13 @@ public class CourseActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        startActivity(new Intent(this,MainActivity.class));
-        return super.onOptionsItemSelected(item);
+        //startActivity(new Intent(this, MainActivity.class));
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -197,7 +197,13 @@ public class SectionActivity extends Activity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        startActivity(new Intent(this, MainActivity.class));
-        return super.onOptionsItemSelected(item);
+        //startActivity(new Intent(this, MainActivity.class));
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

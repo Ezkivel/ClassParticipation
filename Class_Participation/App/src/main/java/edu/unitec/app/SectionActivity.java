@@ -32,7 +32,6 @@ public class SectionActivity extends Activity
 
         loadYears();
         loadCourses();
-
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -53,9 +52,7 @@ public class SectionActivity extends Activity
     {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
-
         List<String> yearList = new ArrayList<String>();
-
         for (int a = -3; a <= 3; a++)
         {
             yearList.add(Integer.toString(year + a));
@@ -63,19 +60,15 @@ public class SectionActivity extends Activity
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, yearList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         ((Spinner)findViewById(R.id.spinnerYear)).setAdapter(dataAdapter);
-
         ((Spinner)findViewById(R.id.spinnerYear)).setSelection(3);
     }
 
     public void loadCourses()
     {
         List<String> courseList = new DatabaseHandler(this).getAllName_Courses();
-
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, courseList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         ((Spinner)findViewById(R.id.spinnerCourse)).setAdapter(dataAdapter);
     }
 
@@ -197,13 +190,7 @@ public class SectionActivity extends Activity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //startActivity(new Intent(this, MainActivity.class));
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        startActivity(new Intent(this, MainActivity.class));
+        return super.onOptionsItemSelected(item);
     }
 }

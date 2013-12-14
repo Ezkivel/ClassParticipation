@@ -126,7 +126,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(COURSE_CODE, course.getCourseCode());
         values.put(COURSE_NAME, course.getCourseName());
         values.put(COURSE_DESC, course.getCourseDescription());
-        assert db != null;
         db.insert(TABLE_COURSE, null, values);
         db.close();
     }
@@ -137,7 +136,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(STUSEC_SECT, section.get_SectionId());
         values.put(STUSEC_STUD, student.get_StudentId());
         values.put(STUSEC_FINAL, 0);
-        assert db != null;
         db.insert(TABLE_STUDENTSECTION, null, values);
         db.close();
     }
@@ -148,14 +146,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(STU_ID, student.get_StudentId());
         values.put(STU_NAME, student.get_StudentName());
         values.put(STU_MAJOR, student.get_StudentMajor());
-        assert db != null;
         db.insert(TABLE_STUDENT, null, values);
         db.close();
     }
 
     Course getCourse(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        assert db != null;
         Cursor cursor = db.query(
                 TABLE_COURSE,
                 new String[]{COURSE_ID, COURSE_CODE, COURSE_NAME, COURSE_DESC},
@@ -164,7 +160,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        assert cursor != null;
         Course course = new Course(
                 Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),
@@ -176,7 +171,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<Course> courseList = new ArrayList<Course>();
         String selectQuery  = "SELECT * FROM " + TABLE_COURSE + " ORDER BY " + COURSE_ID + " ASC";
         SQLiteDatabase db = this.getWritableDatabase();
-        assert db != null;
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do{
@@ -195,7 +189,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<Section> sectionList = new ArrayList<Section>();
         String selectQuery  = "SELECT * FROM " + TABLE_SECTION + " ORDER BY " + SECT_ID + " ASC";
         SQLiteDatabase db = this.getWritableDatabase();
-        assert db != null;
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do{
@@ -215,7 +208,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<String> courseList = new ArrayList<String>();
         String selectQuery  = "SELECT * FROM " + TABLE_COURSE + " ORDER BY " + COURSE_ID + " ASC";
         SQLiteDatabase db = this.getWritableDatabase();
-        assert db != null;
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do{
@@ -227,7 +219,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int getCoursesCount(){
         String countQuery = "SELECT * FROM " + TABLE_COURSE;
         SQLiteDatabase db = this.getReadableDatabase();
-        assert db != null;
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
         return cursor.getCount();
@@ -238,7 +229,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(COURSE_CODE, course.getCourseCode());
         values.put(COURSE_NAME, course.getCourseName());
         values.put(COURSE_DESC, course.getCourseDescription());
-        assert db != null;
         return db.update(
                 TABLE_COURSE,
                 values,
@@ -247,7 +237,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     public void deleteCourse(Course course){
         SQLiteDatabase db = this.getWritableDatabase();
-        assert db != null;
         db.delete(
                 TABLE_COURSE,
                 COURSE_ID + "=?",

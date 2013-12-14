@@ -26,14 +26,12 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if (savedInstanceState == null)
         {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
         populateListView();
         ClickCallback();
     }
@@ -48,7 +46,6 @@ public class MainActivity extends Activity
     {
         Calendar calendar = Calendar.getInstance();
         int month = calendar.get(Calendar.MONTH); //January == 0
-
         //June == 5
         if ( month <= 5 )
         {
@@ -60,11 +57,9 @@ public class MainActivity extends Activity
     public int getCurrentQuarter()
     {
         Calendar calendar = Calendar.getInstance();
-
         int currentMonth = calendar.get(Calendar.MONTH); //January == 0
         int currentSemester = getCurrentSemester();
         int currentQuarter = 0;
-
         if ( currentSemester == 1 )
         {
             if ( currentMonth <= 2 )//January(0), February(1), March(2)
@@ -132,7 +127,6 @@ public class MainActivity extends Activity
             cursorCourseName.close();
         }
         db.close();
-
         return coursesNamesList;
     }
 

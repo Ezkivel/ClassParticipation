@@ -38,9 +38,7 @@ public class StudentActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
-
         ActionBar actionBar = getActionBar();
-        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
@@ -58,7 +56,6 @@ public class StudentActivity extends Activity
         getMenuInflater().inflate(R.menu.student, menu);
         MenuItem a = menu.findItem(R.id.save_students);
         if(!getCurrentStudentNamesList().isEmpty() ){
-            assert a != null;
             a.setVisible(false);
         }
         return true;
@@ -99,7 +96,6 @@ public class StudentActivity extends Activity
                 if (resultCode == RESULT_OK){
                     try{
                         Uri uri = data.getData();
-                        assert uri != null;
                         String filePath = uri.getPath();
                         Log.i("path", filePath);
 
@@ -143,9 +139,7 @@ public class StudentActivity extends Activity
         try
         {
             SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-
             Cursor cursorStudent = db.rawQuery("SELECT StudentId FROM student ORDER BY StudentId ASC", null);
-
             if ( cursorStudent.moveToFirst() )
             {
                 do
@@ -166,10 +160,8 @@ public class StudentActivity extends Activity
         try
         {
             SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-
             Cursor cursorSectionId = db.rawQuery("SELECT StudentId FROM studentSection WHERE SectionId = " +
                     currentSection.get_SectionId() + " ORDER BY SectionId ASC", null);
-
             if ( cursorSectionId.moveToFirst() )
             {
                 do
@@ -190,9 +182,7 @@ public class StudentActivity extends Activity
     {
         List<Integer> studentId = getCurrentStudentIdList();
         List<String> studentNamesList = new ArrayList<String>();
-
         SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-
         for (Integer aStudentId : studentId) {
             Cursor cursorStudentName = db.rawQuery("SELECT StudentName FROM student WHERE StudentId = " +
                     aStudentId + " ORDER BY StudentId ASC", null);
@@ -224,7 +214,6 @@ public class StudentActivity extends Activity
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
             {
-
             }
         });
     }

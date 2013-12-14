@@ -126,6 +126,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(COURSE_CODE, course.getCourseCode());
         values.put(COURSE_NAME, course.getCourseName());
         values.put(COURSE_DESC, course.getCourseDescription());
+        assert db != null;
         db.insert(TABLE_COURSE, null, values);
         db.close();
     }
@@ -136,6 +137,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(STUSEC_SECT, section.get_SectionId());
         values.put(STUSEC_STUD, student.get_StudentId());
         values.put(STUSEC_FINAL, 0);
+        assert db != null;
         db.insert(TABLE_STUDENTSECTION, null, values);
         db.close();
     }
@@ -146,12 +148,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(STU_ID, student.get_StudentId());
         values.put(STU_NAME, student.get_StudentName());
         values.put(STU_MAJOR, student.get_StudentMajor());
+        assert db != null;
         db.insert(TABLE_STUDENT, null, values);
         db.close();
     }
 
     Course getCourse(int id){
         SQLiteDatabase db = this.getReadableDatabase();
+        assert db != null;
         Cursor cursor = db.query(
                 TABLE_COURSE,
                 new String[]{COURSE_ID, COURSE_CODE, COURSE_NAME, COURSE_DESC},

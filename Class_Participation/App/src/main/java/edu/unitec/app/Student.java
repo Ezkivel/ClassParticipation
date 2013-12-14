@@ -53,4 +53,11 @@ public class Student
     public String toString(){
         return get_StudentId()+", "+ get_StudentName()+", "+get_StudentMajor()+"/n";
     }
+
+    public boolean Equals( Student other )
+    {
+        // Would still want to check for null etc. first.
+        return this.get_StudentId() == other.get_StudentId();
+    }
+
 }

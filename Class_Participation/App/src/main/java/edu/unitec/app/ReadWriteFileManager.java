@@ -27,7 +27,7 @@ public class ReadWriteFileManager {
             while( ( line = br.readLine() )!= null ){
                 //still need to validate here
                 String [] std = line.split(splitBy);
-                StudentList.add(new Student(Integer.parseInt(std[0]),std[1],std[2]));
+                StudentList.add(new Student(Integer.parseInt(std[0].trim()),std[1].trim(),std[2].trim()));
             }
         }catch(Exception e){
             e.printStackTrace();

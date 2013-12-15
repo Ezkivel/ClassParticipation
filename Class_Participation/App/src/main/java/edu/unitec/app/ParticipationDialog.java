@@ -31,11 +31,10 @@ public class ParticipationDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_participation, null);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(studentName);
         builder.setView(view);
 

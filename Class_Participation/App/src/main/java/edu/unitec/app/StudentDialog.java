@@ -1,5 +1,6 @@
 package edu.unitec.app;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -33,12 +34,11 @@ public class StudentDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_student, null);
 
-        builder.setTitle(studentName + " (" + Double.toString(finalGrade) + "%)");
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(studentName + " (" + Double.toString((double)Math.round(finalGrade*100)/100) + "%)");
         builder.setView(view);
         builder.setPositiveButton("OK", null);
 
@@ -47,18 +47,20 @@ public class StudentDialog extends DialogFragment
         TableLayout tableLayout = (TableLayout)view.findViewById(R.id.tableLayout);
 
         TableRow tableRowHead = new TableRow(view.getContext());
-        tableRowHead.setBackgroundColor(Color.GRAY);
 
         TextView textViewGrade = new TextView(view.getContext());
         textViewGrade.setText("Grade");
+        textViewGrade.setPadding(5, 5, 35, 5);
         tableRowHead.addView(textViewGrade);
 
         TextView textViewDate = new TextView(view.getContext());
         textViewDate.setText("Date");
+        textViewDate.setPadding(5, 5, 30, 5);
         tableRowHead.addView(textViewDate);
 
         TextView textViewComment = new TextView(view.getContext());
         textViewComment.setText("Comment");
+        textViewComment.setPadding(30, 5, 5, 5);
         tableRowHead.addView(textViewComment);
 
         tableLayout.addView(tableRowHead);
@@ -69,14 +71,17 @@ public class StudentDialog extends DialogFragment
 
             TextView textViewGrade2 = new TextView(view.getContext());
             textViewGrade2.setText(Double.toString(studentParticipationList.get(a).get_ParticipationGrade()));
+            textViewGrade2.setPadding(5, 10, 35, 10);
             tableRow.addView(textViewGrade2);
 
             TextView textViewDate2 = new TextView(view.getContext());
             textViewDate2.setText(studentParticipationList.get(a).get_ParticipationDate());
+            textViewDate2.setPadding(5, 10, 30, 10);
             tableRow.addView(textViewDate2);
 
             TextView textViewComment2 = new TextView(view.getContext());
             textViewComment2.setText(studentParticipationList.get(a).get_ParticipationComment());
+            textViewComment2.setPadding(30, 10, 5, 10);
             tableRow.addView(textViewComment2);
 
             tableLayout.addView(tableRow);

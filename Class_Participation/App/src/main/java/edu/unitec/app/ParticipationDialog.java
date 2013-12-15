@@ -7,15 +7,10 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.TextView;
-
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -86,8 +81,7 @@ public class ParticipationDialog extends DialogFragment
 
                     //Database
                     SQLiteDatabase db = SQLiteDatabase.openDatabase("Participation", null, 0);
-
-                    db.execSQL("INSERT INTO participationstudent(StudentSectionId, ParticipationGrade, ParticipationDate, ParticipationComment) VALUES(" +
+                    db.execSQL("INSERT INTO participationStudent(StudentSectionId, ParticipationGrade, ParticipationDate, ParticipationComment) VALUES(" +
                             studentSectionId + ", " + grade + ", '" + date + "', '" + comment + "')");
 
                     //-----------------------------------Update the final note---------------------------

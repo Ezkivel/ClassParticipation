@@ -2,11 +2,7 @@ package edu.unitec.app;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -15,14 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -109,26 +100,26 @@ public class StudentActivity extends Activity
                         ReadWriteFileManager file = new ReadWriteFileManager();
                         List<Student> student = file.readFromFile(this, filePath);
 
-                        List<Integer> list1 = getAllStudentIDList();
-                        List<Integer> list2 = getCurrentStudentIdList();
+                       /* List<Integer> list1 = getAllStudentIDList();
+                        List<Integer> list2 = getCurrentStudentIdList();*/
 
                         DatabaseHandler bd = new DatabaseHandler(this);
                         //validate
                         if( getCurrentStudentNamesList().isEmpty() ){
 
-                            if( !list1.containsAll( list2 ) ){
+                           // if( !list1.containsAll( list2 ) ){
                                 for (Student aStudent : student) {
                                     bd.addStudent(aStudent);
                                     bd.addStudentTable(aStudent, currentSection);
                                 }
                                 this.recreate();
-                            }else{
+                           /* }else{
                                 for (Student aStudent : student) {
                                     bd.addStudentTable(aStudent, currentSection);
                                 }
                                 this.recreate();
                                 Log.i("student","students list already exist");
-                            }
+                            }*/
                         }else{
                             Log.i("Nothing","do nothing");
                         }
@@ -138,7 +129,7 @@ public class StudentActivity extends Activity
                 break;
         }
     }
-
+/*
     public List<Integer> getAllStudentIDList()
     {
         List<Integer> StudentList = new ArrayList<Integer>();
@@ -159,7 +150,7 @@ public class StudentActivity extends Activity
         }
         return StudentList;
     }
-
+*/
     public List<Integer> getCurrentStudentSectionIdList()
     {
         List<Integer> StudentSectionIdList = new ArrayList<Integer>();
@@ -273,10 +264,11 @@ public class StudentActivity extends Activity
 
         for (int a = 0; a < studentSectionIdList.size(); a++)
         {
-            Cursor cursor = db.rawQuery("SELECT * FROM participationstudent WHERE StudentSectionId = " +
+            Cursor cursor = db.rawQuery("SELECT * FROM participationStudent WHERE StudentSectionId = " +
                     studentSectionIdList.get(a), null);
 
             studentSectionIdCounters[a] = cursor.getCount();
+            cursor.close();
         }
 
         db.close();

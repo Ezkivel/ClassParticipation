@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String STUSEC_FINAL = "StudentSectionFinal";
 
     // Table Partipations Per Student
-    private static final String TABLE_PARTICIPATION = "participationstudent";
+    private static final String TABLE_PARTICIPATION = "participationStudent";
     // Table Participations Per Student Fields
     private static final String PART_ID = "ParticipationID";
     private static final String PART_STUSECT = "StudentSectionId";

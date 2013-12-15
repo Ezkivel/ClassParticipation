@@ -26,14 +26,12 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if (savedInstanceState == null)
         {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
         populateListView();
         ClickCallback();
     }
@@ -48,31 +46,26 @@ public class MainActivity extends Activity
     {
         Calendar calendar = Calendar.getInstance();
         int month = calendar.get(Calendar.MONTH); //January == 0
-
         //June == 5
         if ( month <= 5 )
         {
             return 1;
         }
-
         return 2;
     }
 
     public int getCurrentQuarter()
     {
         Calendar calendar = Calendar.getInstance();
-
         int currentMonth = calendar.get(Calendar.MONTH); //January == 0
         int currentSemester = getCurrentSemester();
         int currentQuarter = 0;
-
         if ( currentSemester == 1 )
         {
             if ( currentMonth <= 2 )//January(0), February(1), March(2)
             {
                 currentQuarter = 1;
             }
-
             //else
             currentQuarter = 2;
         }
@@ -83,11 +76,9 @@ public class MainActivity extends Activity
             {
                 currentQuarter = 3;
             }
-
             //else
             currentQuarter = 4;
         }
-
         return currentQuarter;
     }
 
@@ -96,13 +87,10 @@ public class MainActivity extends Activity
         int year = getCurrentYear();
         int quarter = getCurrentQuarter();
         int semester = getCurrentSemester();
-
         List<Section> sectionsList = new ArrayList<Section>();
-
         try
         {
             SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-
             Cursor cursorSectionIdAndCourseId = db.rawQuery("SELECT SectionId, CourseId FROM section WHERE SectionQuarter = " +
                     quarter + " AND SectionYear = " + year + " ORDER BY SectionId ASC", null);
 
@@ -112,19 +100,15 @@ public class MainActivity extends Activity
                 {
                     Section section = new Section(cursorSectionIdAndCourseId.getInt(0), cursorSectionIdAndCourseId.getInt(1),
                             quarter, semester, year);
-
                     sectionsList.add(section);
-
                 } while ( cursorSectionIdAndCourseId.moveToNext() );
             }
-
             db.close();
         }
 
-        catch (Exception e)
+        catch (Exception ignored)
         {
         }
-
         return sectionsList;
     }
 
@@ -132,22 +116,17 @@ public class MainActivity extends Activity
     {
         List<Section> sectionsList = getCurrentSectionsList();
         List<String> coursesNamesList = new ArrayList<String>();
-
         SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-
-        for (int a = 0; a < sectionsList.size(); a++)
-        {
+        for (Section aSectionsList : sectionsList) {
             Cursor cursorCourseName = db.rawQuery("SELECT CourseName FROM course WHERE CourseId = " +
-                                                    sectionsList.get(a).get_CourseId() + " ORDER BY CourseId ASC", null);
+                    aSectionsList.get_CourseId() + " ORDER BY CourseId ASC", null);
 
-            if ( cursorCourseName.moveToFirst() )
-            {
+            if (cursorCourseName.moveToFirst()) {
                 coursesNamesList.add(cursorCourseName.getString(0));
             }
+            cursorCourseName.close();
         }
-
         db.close();
-
         return coursesNamesList;
     }
 
@@ -163,15 +142,15 @@ public class MainActivity extends Activity
     private void ClickCallback()
     {
         ListView listview = (ListView) findViewById(R.id.listView);
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
             {
+                ListView listview = (ListView) findViewById(R.id.listView);
                 Intent intent = new Intent(view.getContext(), StudentActivity.class);
                 intent.putExtra("Section", getCurrentSectionsList().get(position));
-                intent.putExtra("Course", getCurrentCoursesNamesList().get(position));
+                intent.putExtra("Course", listview.getItemAtPosition(position).toString());
                 startActivity(intent);
             }
         });

@@ -103,26 +103,33 @@ public class StudentActivity extends Activity
                         ReadWriteFileManager file = new ReadWriteFileManager();
                         List<Student> student = file.readFromFile(this, filePath);
 
-                        List<Integer> list1 = getAllStudentIDList();
-                        List<Integer> list2 = getCurrentStudentIdList();
+                      /*  List<Integer> list1 = getAllStudentIDList();
+                        List<Integer> list2 = getCurrentStudentIdList();*/
 
                         DatabaseHandler bd = new DatabaseHandler(this);
                         //validate
                         if( getCurrentStudentNamesList().isEmpty() ){
-
-                            if( !list1.containsAll( list2 ) ){
-                                for (Student aStudent : student) {
-                                    bd.addStudent(aStudent);
-                                    bd.addStudentTable(aStudent, currentSection);
+                            //if(list1.isEmpty()){
+                              for(int i = 0; i < student.size(); i++ ){
+                                    bd.addStudent(student.get(i));
+                                    bd.addStudentTable(student.get(i), currentSection);
                                 }
                                 this.recreate();
-                            }else{
-                                for (Student aStudent : student) {
-                                    bd.addStudentTable(aStudent, currentSection);
-                                }
-                                this.recreate();
-                                Log.i("student","students list already exist");
-                            }
+                            /*}else{
+                                if( !list2.containsAll( list1 ) ){
+                                    for(int i = 0; i < student.size(); i++ ){
+                                        bd.addStudent(student.get(i));
+                                        bd.addStudentTable(student.get(i), currentSection);
+                                    }
+                                    this.recreate();
+                                 }else{
+                                    for(int i = 0; i < student.size(); i++ ){
+                                        bd.addStudentTable(student.get(i), currentSection);
+                                    }
+                                    this.recreate();
+                                    Log.i("student","students list already exist");
+                                 }
+                            }*/
                         }else{
                             Log.i("Nothing","do nothing");
                         }
@@ -132,7 +139,7 @@ public class StudentActivity extends Activity
                 break;
         }
     }
-
+/*
     public List<Integer> getAllStudentIDList()
     {
         List<Integer> StudentList = new ArrayList<Integer>();
@@ -145,6 +152,7 @@ public class StudentActivity extends Activity
                 do
                 {
                     StudentList.add(cursorStudent.getInt(0));
+                    Log.i("Student",""+cursorStudent.getInt(0));
                 } while ( cursorStudent.moveToNext() );
             }
             db.close();
@@ -153,7 +161,7 @@ public class StudentActivity extends Activity
         }
         return StudentList;
     }
-
+*/
     public List<Integer> getCurrentStudentIdList()
     {
         List<Integer> StudentList = new ArrayList<Integer>();

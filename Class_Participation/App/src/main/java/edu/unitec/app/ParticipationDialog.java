@@ -90,7 +90,7 @@ public class ParticipationDialog extends DialogFragment
                     db.execSQL("INSERT INTO participationstudent(StudentSectionId, ParticipationGrade, ParticipationDate, ParticipationComment) VALUES(" +
                             studentSectionId + ", " + grade + ", '" + date + "', '" + comment + "')");
 
-                    //-----------------------------------Update the fina note---------------------------
+                    //-----------------------------------Update the final note---------------------------
 
                     int studentSectionFinal = 0;
 

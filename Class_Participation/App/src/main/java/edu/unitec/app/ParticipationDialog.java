@@ -80,7 +80,12 @@ public class ParticipationDialog extends DialogFragment
                     String comment = ((EditText)view.findViewById(R.id.editTextComment)).getText().toString();
 
                     //Database
-                    SQLiteDatabase db = SQLiteDatabase.openDatabase("Participation", null, 0);
+                    DatabaseHandler db = new DatabaseHandler(view.getContext());
+                    db.addParticipation(new Participation(studentSectionId,grade,date,comment));
+                    int studentSectionFinal = db.getFinal(studentSectionId) + grade;
+                    db.UpdateparticipationStudent(studentSectionId, studentSectionFinal);
+                    db.close();
+                    /*SQLiteDatabase db = SQLiteDatabase.openDatabase("Participation", null, 0);
                     db.execSQL("INSERT INTO participationStudent(StudentSectionId, ParticipationGrade, ParticipationDate, ParticipationComment) VALUES(" +
                             studentSectionId + ", " + grade + ", '" + date + "', '" + comment + "')");
 
@@ -101,7 +106,7 @@ public class ParticipationDialog extends DialogFragment
                     db.execSQL("UPDATE studentSection SET StudentSectionFinal =  " + studentSectionFinal + " WHERE StudentSectionId = " +
                             studentSectionId);
 
-                    db.close();
+                    db.close();*/
                 }
 
                 catch (Exception e)

@@ -138,6 +138,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    void addParticipation(Participation participation){
+        SQLiteDatabase	db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PART_STUSECT, participation.get_StudentSectionId());
+        values.put(PART_GRADE, participation.get_ParticipationGrade());
+        values.put(PART_DATE, participation.get_ParticipationDate());
+        values.put(PART_COMMENT, participation.get_ParticipationComment());
+        db.insert(TABLE_PARTICIPATION, null, values);
+        db.close();
+    }
+
+  int getFinal( int studentSectionId){
+    String selectQuery  = "SELECT StudentSectionFinal FROM studentSection WHERE StudentSectionId = " +
+            studentSectionId;
+    SQLiteDatabase db = this.getWritableDatabase();
+    int studentSectionFinal = 0;
+    Cursor cursor = db.rawQuery(selectQuery, null);
+      if ( cursor.moveToFirst() )
+      {
+          studentSectionFinal = cursor.getInt(0);
+      }
+      return studentSectionFinal;
+  }
+
+    public void UpdateparticipationStudent(int studentSectionId, int studentSectionFinal ){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String strSQL = "UPDATE studentSection SET StudentSectionFinal =  " + studentSectionFinal + " WHERE StudentSectionId = " +
+                studentSectionId;
+        db.execSQL(strSQL);
+    }
+
     void addStudent(Student student){
         SQLiteDatabase	db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

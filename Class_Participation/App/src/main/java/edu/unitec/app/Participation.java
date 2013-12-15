@@ -50,6 +50,16 @@ public class Participation
 		this._ParticipationGrade = 0.0;
 		this._ParticipationDate = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
 	}
+    public Participation(int _StudentSectionId, double _ParticipationGrade, String _ParticipationDate,
+                         String _ParticipationComment)
+    {
+        super();
+        this._StudentSectionId = _StudentSectionId;
+        this._ParticipationGrade = _ParticipationGrade;
+        this._ParticipationDate = _ParticipationDate;
+        this._ParticipationComment = _ParticipationComment;
+    }
+
 	public int get_ParticipationId()
     {
 		return _ParticipationId;

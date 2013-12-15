@@ -266,7 +266,6 @@ public class StudentActivity extends Activity
         {
             Cursor cursor = db.rawQuery("SELECT * FROM participationStudent WHERE StudentSectionId = " +
                     studentSectionIdList.get(a), null);
-
             studentSectionIdCounters[a] = cursor.getCount();
             cursor.close();
         }

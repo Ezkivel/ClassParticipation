@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,20 +151,46 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-  int getFinal( int studentSectionId){
+    List<Participation> getStudentParticipationList(int studentSectionId)
+    {
+        List<Participation> currentStudentParticipationList = new ArrayList<Participation>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM participationStudent WHERE StudentSectionId="+studentSectionId;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if ( cursor.moveToFirst() )
+        {
+            do
+            {
+                currentStudentParticipationList.add(new Participation(cursor.getInt(0), cursor.getInt(1),
+                        cursor.getDouble(2), cursor.getString(3),
+                        cursor.getString(4)));
+
+            } while ( cursor.moveToNext() );
+        }
+
+        db.close();
+
+        return currentStudentParticipationList;
+    }
+
+  double getFinalGrade( int studentSectionId){
     String selectQuery  = "SELECT StudentSectionFinal FROM studentSection WHERE StudentSectionId = " +
             studentSectionId;
     SQLiteDatabase db = this.getWritableDatabase();
-    int studentSectionFinal = 0;
+    double studentSectionFinal = 0;
     Cursor cursor = db.rawQuery(selectQuery, null);
       if ( cursor.moveToFirst() )
       {
-          studentSectionFinal = cursor.getInt(0);
+          studentSectionFinal = cursor.getDouble(0);
       }
       return studentSectionFinal;
   }
 
-    public void UpdateparticipationStudent(int studentSectionId, int studentSectionFinal ){
+    public void UpdateparticipationStudent(int studentSectionId, double studentSectionFinal ){
         SQLiteDatabase db = this.getWritableDatabase();
         String strSQL = "UPDATE studentSection SET StudentSectionFinal =  " + studentSectionFinal + " WHERE StudentSectionId = " +
                 studentSectionId;

@@ -316,6 +316,25 @@ public class StudentActivity extends Activity
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
             {
+                List<Participation> currentStudentParticipationList = new ArrayList<Participation>();
+                double finalGrade = 0;
+
+                try
+                {
+                    int currentStudentSectionId = getCurrentStudentSectionIdList().get(position);
+
+                    DatabaseHandler db = new DatabaseHandler(view.getContext());
+                    currentStudentParticipationList = db.getStudentParticipationList(currentStudentSectionId);
+                    finalGrade = db.getFinalGrade(currentStudentSectionId);
+                    db.close();
+                }
+
+                catch (Exception e)
+                {
+                }
+
+                StudentDialog dialog = new StudentDialog(currentStudentParticipationList, getCurrentStudentNamesList().get(position), finalGrade);
+                dialog.show(getFragmentManager(), "dialog_student");
             }
         });
     }

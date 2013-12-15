@@ -74,7 +74,7 @@ public class ParticipationDialog extends DialogFragment
 
                 try
                 {
-                    //-------------------------Save the participation-----------------------------------
+                    //-------------------------Save the participation & update final note-----------------------------------
 
                     String date = new SimpleDateFormat("dd-MM-yyy").format(new Date());
                     String comment = ((EditText)view.findViewById(R.id.editTextComment)).getText().toString();
@@ -82,31 +82,9 @@ public class ParticipationDialog extends DialogFragment
                     //Database
                     DatabaseHandler db = new DatabaseHandler(view.getContext());
                     db.addParticipation(new Participation(studentSectionId,grade,date,comment));
-                    int studentSectionFinal = db.getFinal(studentSectionId) + grade;
+                    double studentSectionFinal = db.getFinalGrade(studentSectionId) + grade;
                     db.UpdateparticipationStudent(studentSectionId, studentSectionFinal);
                     db.close();
-                    /*SQLiteDatabase db = SQLiteDatabase.openDatabase("Participation", null, 0);
-                    db.execSQL("INSERT INTO participationStudent(StudentSectionId, ParticipationGrade, ParticipationDate, ParticipationComment) VALUES(" +
-                            studentSectionId + ", " + grade + ", '" + date + "', '" + comment + "')");
-
-                    //-----------------------------------Update the final note---------------------------
-
-                    int studentSectionFinal = 0;
-
-                    Cursor cursorStudentSectionFinal = db.rawQuery("SELECT StudentSectionFinal FROM studentSection WHERE StudentSectionId = " +
-                            studentSectionId, null);
-
-                    if ( cursorStudentSectionFinal.moveToFirst() )
-                    {
-                        studentSectionFinal = cursorStudentSectionFinal.getInt(0);
-                    }
-
-                    studentSectionFinal += grade;
-
-                    db.execSQL("UPDATE studentSection SET StudentSectionFinal =  " + studentSectionFinal + " WHERE StudentSectionId = " +
-                            studentSectionId);
-
-                    db.close();*/
                 }
 
                 catch (Exception e)

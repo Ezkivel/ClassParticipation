@@ -2,6 +2,7 @@ package edu.unitec.app;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Henry on 12-08-13.
@@ -78,6 +80,10 @@ public class StudentActivity extends Activity
                 intent = Intent.createChooser(chooseFile, "Choose a file");
                 startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
                 break;
+
+            case R.id.item_newParticipation:
+                showParticipationDialog();
+                break;
         }
     }
     @Override
@@ -106,9 +112,40 @@ public class StudentActivity extends Activity
         }
     }
 
+    public List<Integer> getCurrentStudentSectionIdList()
+    {
+        List<Integer> StudentSectionIdList = new ArrayList<Integer>();
+
+        try
+        {
+            SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+
+            Cursor cursorStudentSectionId = db.rawQuery("SELECT StudentSectionId FROM studentSection WHERE SectionId = " +
+                    currentSection.get_SectionId() + " ORDER BY SectionId ASC", null);
+
+            if ( cursorStudentSectionId.moveToFirst() )
+            {
+                do
+                {
+                    StudentSectionIdList.add(cursorStudentSectionId.getInt(0));
+
+                } while ( cursorStudentSectionId.moveToNext() );
+            }
+
+            db.close();
+        }
+
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return StudentSectionIdList;
+    }
+
     public List<Integer> getCurrentStudentIdList()
     {
-        List<Integer> StudentList = new ArrayList<Integer>();
+        List<Integer> StudentIdList = new ArrayList<Integer>();
         try
         {
             SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
@@ -120,15 +157,20 @@ public class StudentActivity extends Activity
             {
                 do
                 {
-                    StudentList.add(cursorSectionId.getInt(0));
+                    StudentIdList.add(cursorSectionId.getInt(0));
 
                 } while ( cursorSectionId.moveToNext() );
             }
+
             db.close();
-        }catch(Exception e){
+
+        }
+
+        catch(Exception e)
+        {
             e.printStackTrace();
         }
-        return StudentList;
+        return StudentIdList;
     }
 
 
@@ -162,6 +204,75 @@ public class StudentActivity extends Activity
         listview.setAdapter(adapter);
     }
 
+    public int getMinValueIndex(int[] array)
+    {
+        int minValue = array[0];
+        int index = 0;
+        int i;
+
+        for(i = 1; i < array.length; i++)
+        {
+            if(array[i] < minValue)
+            {
+                minValue = array[i];
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public int selectStudent()
+    {
+        List<Integer> studentSectionIdList = getCurrentStudentSectionIdList();
+        int studentSectionIdCounters[] = new int[studentSectionIdList.size()];
+
+        SQLiteDatabase db = openOrCreateDatabase("Participation", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+
+        for (int a = 0; a < studentSectionIdList.size(); a++)
+        {
+            Cursor cursor = db.rawQuery("SELECT * FROM participationstudent WHERE StudentSectionId = " +
+                    studentSectionIdList.get(a), null);
+
+            studentSectionIdCounters[a] = cursor.getCount();
+        }
+
+        db.close();
+
+        //---------------------------------------------------------------------------------------------
+
+        int studentIndex = 0;
+
+        Random random = new Random();
+        int randomValue = random.nextInt(6 - 1) + 1;
+
+        //Less student participation
+        if ( ( randomValue == 1 ) || ( randomValue == 2 ) || ( randomValue == 3 ) )
+        {
+            studentIndex = getMinValueIndex(studentSectionIdCounters);
+        }
+
+        //Random student
+        else
+        {
+            studentIndex = random.nextInt(studentSectionIdList.size());
+        }
+
+        return studentIndex;
+    }
+
+    public void showParticipationDialog()
+    {
+        if ( getCurrentStudentNamesList().size() > 0 )
+        {
+            int studentIndex = selectStudent();
+
+            ParticipationDialog dialog = new ParticipationDialog(getCurrentStudentSectionIdList().get(studentIndex),
+                    getCurrentStudentNamesList().get(studentIndex));
+
+            dialog.show(getFragmentManager(), "dialog_participation");
+        }
+    }
+
     //event clicking on one item of the list view
     private void ClickCallback()
     {
@@ -171,7 +282,6 @@ public class StudentActivity extends Activity
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id)
             {
-
             }
         });
     }

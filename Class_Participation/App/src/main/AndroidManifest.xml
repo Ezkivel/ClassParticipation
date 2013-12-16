@@ -28,6 +28,7 @@
         <activity android:name="SectionActivity" android:label="@string/sectionActivity" android:screenOrientation="portrait"/>
 
         <activity android:name="StudentActivity" android:label="Student" android:screenOrientation="portrait"/>
+
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     </application>
 

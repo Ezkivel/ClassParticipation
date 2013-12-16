@@ -32,17 +32,22 @@ public class StudentActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         currentSection = (Section)intent.getSerializableExtra("Section");
         String course_name = intent.getStringExtra("Course");
         setTitle(course_name);
 
+        actionBar();
         populateListView();
         ClickCallback();
     }
+
+    public void actionBar(){
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,7 +93,6 @@ public class StudentActivity extends Activity
             case R.id.item_addStudent:
                 showAddStudentDialog();
                 break;
-
             case  R.id.save_students:
                 //import excel
                 Intent chooseFile;
@@ -98,11 +102,14 @@ public class StudentActivity extends Activity
                 intent = Intent.createChooser(chooseFile, "Choose a file");
                 startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
                 break;
-
             case R.id.item_newParticipation:
                 showParticipationDialog();
                 break;
         }
+    }
+
+    public void update(){
+        this.recreate();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -359,6 +366,7 @@ public class StudentActivity extends Activity
 
                 StudentDialog dialog = new StudentDialog(currentStudentParticipationList, getCurrentStudentNamesList().get(position), finalGrade);
                 dialog.show(getFragmentManager(), "dialog_student");
+
             }
         });
     }

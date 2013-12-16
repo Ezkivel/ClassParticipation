@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 /**
  * Created by Ariel on 12-15-13.
@@ -38,6 +39,7 @@ public class AddStudentDialog extends DialogFragment
         studentId = (EditText)view.findViewById(R.id.editTextStudentId);
         studentName = (EditText)view.findViewById(R.id.editTextStudentName);
         studentMajor = (EditText)view.findViewById(R.id.editTextStudentMajor);
+
 
         studentId.requestFocus();
 
@@ -83,6 +85,7 @@ public class AddStudentDialog extends DialogFragment
                 @Override
                 public void onClick(View v)
                 {
+
                     Boolean wantToCloseDialog = false;
                     boolean studentExist = false;
 
@@ -129,7 +132,6 @@ public class AddStudentDialog extends DialogFragment
                         catch (Exception e)
                         {
                         }
-
                         wantToCloseDialog = true;
                     }
 
@@ -140,5 +142,6 @@ public class AddStudentDialog extends DialogFragment
                 }
             });
         }
+
     }
 }

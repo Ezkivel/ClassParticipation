@@ -213,10 +213,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT " + STU_ID + " FROM " + TABLE_STUDENT + " WHERE " + STU_ID + " = " + studentId, null);
 
-         if ( cursor.getCount() > 0 )
+        if ( cursor.getCount() > 0 )
         {
             return true;
         }
+
+        return false;
+    }
+
+    boolean studentSectionExist(Section section, int studentId)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT " + STUSEC_STUD + " FROM " + TABLE_STUDENTSECTION +
+                " WHERE " + STUSEC_SECT + " = " + section.get_SectionId(), null);
+
+         if ( cursor.moveToFirst() )
+         {
+             do
+             {
+                 if ( cursor.getInt(0) == studentId )
+                 {
+                     return true;
+                 }
+
+             } while ( cursor.moveToNext() );
+         }
 
         return false;
     }

@@ -10,9 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import java.util.List;
 
 /**
  * Created by Ariel on 12-15-13.
@@ -25,9 +28,15 @@ public class AddStudentDialog extends DialogFragment
     EditText studentName;
     EditText studentMajor;
 
-    AddStudentDialog(Section currentSection)
+    ArrayAdapter<String> arrayAdapter;
+    List<String> listViewStudentNameList;
+
+    AddStudentDialog(Section currentSection, ArrayAdapter<String> arrayAdapter, List<String> list)
     {
         this.currentSection = currentSection;
+
+        this.arrayAdapter = arrayAdapter;
+        this.listViewStudentNameList = list;
     }
 
     @Override
@@ -47,7 +56,7 @@ public class AddStudentDialog extends DialogFragment
         builder.setTitle("Add Student");
         builder.setView(view);
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        builder.setNegativeButton("Close", new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int id)
             {
@@ -87,12 +96,12 @@ public class AddStudentDialog extends DialogFragment
                 {
 
                     Boolean wantToCloseDialog = false;
-                    boolean studentExist = false;
+                    boolean studentSectionExist = false;
 
                     try
                     {
                         DatabaseHandler db = new DatabaseHandler(v.getContext());
-                        studentExist = db.studentExist(Integer.parseInt(studentId.getText().toString()));
+                        studentSectionExist = db.studentSectionExist(currentSection, Integer.parseInt(studentId.getText().toString()));
                         db.close();
                     }
 
@@ -105,7 +114,7 @@ public class AddStudentDialog extends DialogFragment
                         studentId.requestFocus();
                     }
 
-                    else if ( studentExist )
+                    else if ( studentSectionExist )
                     {
                         studentId.requestFocus();
                     }
@@ -124,15 +133,31 @@ public class AddStudentDialog extends DialogFragment
                         try
                         {
                             DatabaseHandler db = new DatabaseHandler(v.getContext());
-                            db.addStudent(student);
+
+                            if ( !db.studentExist(Integer.parseInt(studentId.getText().toString())) )
+                            {
+                                db.addStudent(student);
+                            }
+
                             db.addStudentTable(student, currentSection);
                             db.close();
+
+                            //Update the listView of student activity
+                            listViewStudentNameList.add(student.get_StudentName());
+                            arrayAdapter.notifyDataSetChanged();
+
+                            studentId.setText("");
+                            studentName.setText("");
+                            studentMajor.setText("");
+
+                            studentId.requestFocus();
                         }
 
                         catch (Exception e)
                         {
                         }
-                        wantToCloseDialog = true;
+
+                        //wantToCloseDialog = true;
                     }
 
                     if(wantToCloseDialog)

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class StudentActivity extends Activity
     final int ACTIVITY_CHOOSE_FILE = 1;
     private Section currentSection = new Section();
 
+    ArrayAdapter<String> arrayAdapter;
+    List<String> listViewStudentNameList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,8 +42,18 @@ public class StudentActivity extends Activity
         String course_name = intent.getStringExtra("Course");
         setTitle(course_name);
 
+        //------------------Connect ArrayAdapter with a List for the ListView----------------------
+
+        listViewStudentNameList = getCurrentStudentNamesList();
+
+        arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, listViewStudentNameList);
+
+        ((ListView)findViewById(R.id.listView_student)).setAdapter(arrayAdapter);
+
+        //------------------------------------------------------------------------------------------
+
         actionBar();
-        populateListView();
         ClickCallback();
     }
 
@@ -254,15 +268,6 @@ public class StudentActivity extends Activity
         return studentNamesList;
     }
 
-    //creating the listView
-    private void populateListView()
-    {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getCurrentStudentNamesList());
-        ListView listview = (ListView) findViewById(R.id.listView_student);
-        listview.setAdapter(adapter);
-    }
-
     public int getMinValueIndex(int[] array)
     {
         int minValue = array[0];
@@ -334,7 +339,7 @@ public class StudentActivity extends Activity
 
     public void showAddStudentDialog()
     {
-        AddStudentDialog dialog = new AddStudentDialog(currentSection);
+        AddStudentDialog dialog = new AddStudentDialog(currentSection, arrayAdapter, listViewStudentNameList);
         dialog.show(getFragmentManager(), "dialog_addstudent");
     }
 

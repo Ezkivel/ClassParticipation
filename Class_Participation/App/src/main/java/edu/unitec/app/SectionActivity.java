@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -191,14 +192,11 @@ public class SectionActivity extends Activity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+               onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
-    }
+
 }

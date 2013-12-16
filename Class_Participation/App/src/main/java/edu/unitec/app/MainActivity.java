@@ -21,6 +21,8 @@ import java.util.List;
 
 public class MainActivity extends Activity
 {
+    private static final int REQUEST_CODE = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -32,8 +34,14 @@ public class MainActivity extends Activity
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-        populateListView();
+
         ClickCallback();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateListView();
     }
 
     public int getCurrentYear()
@@ -209,10 +217,19 @@ public class MainActivity extends Activity
                 startActivity(new Intent(this,CourseActivity.class));
                 break;
             case R.id.section:
-                startActivity(new Intent(this,SectionActivity.class));
+                startActivityForResult(new Intent(this, SectionActivity.class), REQUEST_CODE);
                 break;
             case R.id.about:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == REQUEST_CODE) {
+            this.recreate();
         }
     }
 
@@ -228,15 +245,6 @@ public class MainActivity extends Activity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.about) {
-            return true;
-        }else if(id == R.id.course){
-            return true;
-        }else if(id == R.id.section){
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -255,5 +263,4 @@ public class MainActivity extends Activity
             return rootView;
         }
     }
-
 }

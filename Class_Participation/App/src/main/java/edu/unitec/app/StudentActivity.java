@@ -48,10 +48,23 @@ public class StudentActivity extends Activity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.student, menu);
-        MenuItem a = menu.findItem(R.id.save_students);
+
+        MenuItem save_student = menu.findItem(R.id.item_addStudent);
+        MenuItem save_students = menu.findItem(R.id.save_students);
+        MenuItem newParticipation = menu.findItem(R.id.item_newParticipation);
+
         if(!getCurrentStudentNamesList().isEmpty() ){
-            a.setVisible(false);
+            save_student.setVisible(true);
+            save_students.setVisible(false);
+            newParticipation.setVisible(true);
         }
+
+        else {
+            save_student.setVisible(false);
+            save_students.setVisible(true);
+            newParticipation.setVisible(false);
+        }
+
         return true;
     }
 
@@ -72,6 +85,10 @@ public class StudentActivity extends Activity
 
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.item_addStudent:
+                showAddStudentDialog();
+                break;
+
             case  R.id.save_students:
                 //import excel
                 Intent chooseFile;
@@ -306,6 +323,12 @@ public class StudentActivity extends Activity
 
             dialog.show(getFragmentManager(), "dialog_participation");
         }
+    }
+
+    public void showAddStudentDialog()
+    {
+        AddStudentDialog dialog = new AddStudentDialog(currentSection);
+        dialog.show(getFragmentManager(), "dialog_addstudent");
     }
 
     //event clicking on one item of the list view

@@ -207,6 +207,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    boolean studentExist(int studentId)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT " + STU_ID + " FROM " + TABLE_STUDENT + " WHERE " + STU_ID + " = " + studentId, null);
+
+         if ( cursor.getCount() > 0 )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     Course getCourse(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(

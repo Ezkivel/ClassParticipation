@@ -6,7 +6,8 @@
     <string name="sectionActivity">Section</string>
     <string name="courses">Add Course</string>
     <string name="sections">Add Section</string>
-    <string name="students">Add Student</string>
+    <string name="student">Add Student</string>
+    <string name="students">Add Students</string>
     <string name="student_newParticipation">New Participation</string>
     <string name="abouts">About</string>
     <string name="course_code">Progra4</string>

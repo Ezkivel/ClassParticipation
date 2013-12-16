@@ -10,6 +10,13 @@
         android:icon="@drawable/ic_action_new_participation"/>
 
     <item
+        android:id="@+id/item_addStudent"
+        android:title="@string/student"
+        android:onClick="onclickItem"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_add_student"/>
+
+    <item
         android:id="@+id/save_students"
         android:title="@string/students"
         android:onClick="onclickItem"

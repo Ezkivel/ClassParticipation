@@ -1,6 +1,7 @@
 package edu.unitec.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
@@ -220,6 +221,8 @@ public class MainActivity extends Activity
                 startActivityForResult(new Intent(this, SectionActivity.class), REQUEST_CODE);
                 break;
             case R.id.about:
+                AboutDialog dialog = new AboutDialog();
+                dialog.show(getFragmentManager(), "dialog_about");
                 break;
         }
     }

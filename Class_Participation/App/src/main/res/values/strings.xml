@@ -17,6 +17,8 @@
     <string name="listView">Course</string>
     <string name="home">home</string>
     <string name ="StudentActivity">Student</string>
-
+    <string name ="facebook">facebook</string>
+    <string name="app_id">558500024224460</string>
+    <string name="post_facebook">post</string>
 
 </resources>

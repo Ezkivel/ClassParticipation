@@ -3,9 +3,15 @@ package edu.unitec.app;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,8 +19,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.FacebookError;
+
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -22,6 +38,8 @@ import java.util.List;
 public class MainActivity extends Activity
 {
     private static final int REQUEST_CODE = 2;
+    Facebook fb;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,6 +53,36 @@ public class MainActivity extends Activity
                     .commit();
         }
 
+        String id_app = getString(R.string.app_id);
+        fb = new Facebook(id_app);
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "edu.unitec.app",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.i("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
+        /*sp = getPreferences(MODE_PRIVATE);
+        String access_toke = sp.getString("access_token", null);
+        long expires = sp.getLong("access_expires", 0);
+
+        if( access_toke != null )
+        {
+            fb.setAccessToken(access_toke);
+        }
+        if(expires != 0 )
+        {
+            fb.setAccessExpires(expires);
+        }*/
         ClickCallback();
     }
 
@@ -213,7 +261,73 @@ public class MainActivity extends Activity
 
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {
-            case  R.id.course:
+            case R.id.post_facebook:
+                fb.dialog(MainActivity.this, "feed", new Facebook.DialogListener() {
+                    @Override
+                    public void onComplete(Bundle values) {
+                        Toast.makeText(MainActivity.this, "Completed", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFacebookError(FacebookError e) {
+                        Toast.makeText(MainActivity.this, "onFacebookError", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(DialogError e) {
+                        Toast.makeText(MainActivity.this, "onError", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(MainActivity.this, "onCancel", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
+            case R.id.facebook:
+
+                if(fb.isSessionValid()){
+                    try{
+                        fb.logout(getApplicationContext());
+                    }catch(Exception e){
+                    }
+                }else{
+                    fb.authorize(MainActivity.this, new String[]{"email"}, new Facebook.DialogListener() {
+                        @Override
+                        public void onComplete(Bundle values) {
+                            /*SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("access_token",fb.getAccessToken());
+                            editor.putLong("access_expires", fb.getAccessExpires());
+                            editor.commit();*/
+                            JSONObject obj = null;
+                            try{
+                              //  String jsonUser = fb.request("me");
+                                //obj = Util.parseJson(jsonUser);
+                                //String id = obj.optString("id");
+                                //String name = obj.optString("name");
+                                //Toast.makeText(MainActivity.this, "Welcome: " + name, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "your are login", Toast.LENGTH_SHORT).show();
+                            }catch(Exception e){
+                                   e.printStackTrace();
+                            }
+                        }
+                        @Override
+                        public void onFacebookError(FacebookError e) {
+                            Toast.makeText(MainActivity.this, "onFacebookError", Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onError(DialogError e) {
+                            Toast.makeText(MainActivity.this, "onError", Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onCancel() {
+                            Toast.makeText(MainActivity.this, "onCancel", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+                break;
+            case R.id.course:
                 startActivity(new Intent(this,CourseActivity.class));
                 break;
             case R.id.section:
@@ -221,6 +335,7 @@ public class MainActivity extends Activity
                 break;
             case R.id.about:
                 break;
+
         }
     }
 
@@ -231,12 +346,20 @@ public class MainActivity extends Activity
         if (requestCode == REQUEST_CODE) {
             this.recreate();
         }
+        fb.authorizeCallback(requestCode, resultCode, intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem post = menu.findItem(R.id.post_facebook);
+        if(fb.isSessionValid()){
+            post.setVisible(false);
+        }else{
+            post.setVisible(true);
+        }
+
         return true;
     }
 

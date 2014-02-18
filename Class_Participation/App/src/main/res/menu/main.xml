@@ -17,23 +17,6 @@
         android:showAsAction="never"
         android:onClick="onclickItem"/>
 
-
-    <item
-        android:id="@+id/facebook"
-        android:title="@string/facebook"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:icon="@drawable/fb_logo"
-        android:onClick="onclickItem"/>
-
-    <item
-        android:id="@+id/post_facebook"
-        android:title="@string/post_facebook"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:icon="@drawable/wall_post"
-        android:onClick="onclickItem"/>
-
     <item
         android:id="@+id/about"
         android:title="@string/abouts"

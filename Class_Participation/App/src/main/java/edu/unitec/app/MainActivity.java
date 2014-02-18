@@ -39,8 +39,8 @@ import java.util.List;
 public class MainActivity extends Activity
 {
     private static final int REQUEST_CODE = 2;
-    Facebook fb;
-    SharedPreferences sp;
+   // Facebook fb;
+    //SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,7 +54,7 @@ public class MainActivity extends Activity
                     .commit();
         }
 
-        String id_app = getString(R.string.app_id);
+      /*  String id_app = getString(R.string.app_id);
         fb = new Facebook(id_app);
         // Add code to print out the key hash
         try {
@@ -71,7 +71,7 @@ public class MainActivity extends Activity
         } catch (NoSuchAlgorithmException e) {
 
         }
-
+        */
         /*sp = getPreferences(MODE_PRIVATE);
         String access_toke = sp.getString("access_token", null);
         long expires = sp.getLong("access_expires", 0);
@@ -117,14 +117,16 @@ public class MainActivity extends Activity
         int currentMonth = calendar.get(Calendar.MONTH); //January == 0
         int currentSemester = getCurrentSemester();
         int currentQuarter = 0;
+
         if ( currentSemester == 1 )
         {
             if ( currentMonth <= 2 )//January(0), February(1), March(2)
             {
                 currentQuarter = 1;
-            }
+            }else{
             //else
             currentQuarter = 2;
+            }
         }
 
         else if ( currentSemester == 2 )
@@ -132,9 +134,10 @@ public class MainActivity extends Activity
             if ( currentMonth <= 8 ) //(July(6), August(7), September(8)
             {
                 currentQuarter = 3;
-            }
+            }else{
             //else
             currentQuarter = 4;
+            }
         }
         return currentQuarter;
     }
@@ -262,7 +265,7 @@ public class MainActivity extends Activity
 
     public void onclickItem(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.post_facebook:
+           /* case R.id.post_facebook:
                 fb.dialog(MainActivity.this, "feed", new Facebook.DialogListener() {
                     @Override
                     public void onComplete(Bundle values) {
@@ -284,36 +287,36 @@ public class MainActivity extends Activity
                         Toast.makeText(MainActivity.this, "onCancel", Toast.LENGTH_SHORT).show();
                     }
                 });
-                break;
-            case R.id.facebook:
+                break;*/
+            //case R.id.facebook:
 
-                if(fb.isSessionValid()){
-                    try{
-                        fb.logout(getApplicationContext());
-                    }catch(Exception e){
-                    }
-                }else{
-                    fb.authorize(MainActivity.this, new String[]{"email"}, new Facebook.DialogListener() {
-                        @Override
-                        public void onComplete(Bundle values) {
+              //  if(fb.isSessionValid()){
+                //    try{
+                //      fb.logout(getApplicationContext());
+                //    }catch(Exception e){
+                //    }
+                //}else{
+                  //  fb.authorize(MainActivity.this, new String[]{"email"}, new Facebook.DialogListener() {
+                    //    @Override
+                      //  public void onComplete(Bundle values) {
                             /*SharedPreferences.Editor editor = sp.edit();
                             editor.putString("access_token",fb.getAccessToken());
                             editor.putLong("access_expires", fb.getAccessExpires());
                             editor.commit();*/
-                            JSONObject obj = null;
-                            try{
-                              //  String jsonUser = fb.request("me");
-                                //obj = Util.parseJson(jsonUser);
-                                //String id = obj.optString("id");
-                                //String name = obj.optString("name");
-                                //Toast.makeText(MainActivity.this, "Welcome: " + name, Toast.LENGTH_SHORT).show();
-                                Toast.makeText(MainActivity.this, "your are login", Toast.LENGTH_SHORT).show();
-                            }catch(Exception e){
-                                   e.printStackTrace();
-                            }
-                        }
-                        @Override
-                        public void onFacebookError(FacebookError e) {
+                      //      JSONObject obj = null;
+                       //     try{
+                              /*String jsonUser = fb.request("me");
+                                obj = Util.parseJson(jsonUser);
+                                String id = obj.optString("id");
+                                String name = obj.optString("name");
+                                Toast.makeText(MainActivity.this, "Welcome: " + name, Toast.LENGTH_SHORT).show();*/
+                         //       Toast.makeText(MainActivity.this, "your are login", Toast.LENGTH_SHORT).show();
+                           // }catch(Exception e){
+                             //      e.printStackTrace();
+                            //}
+                       // }
+                     //   @Override
+                        /*public void onFacebookError(FacebookError e) {
                             Toast.makeText(MainActivity.this, "onFacebookError", Toast.LENGTH_SHORT).show();
                         }
                         @Override
@@ -327,7 +330,7 @@ public class MainActivity extends Activity
                     });
 
                 }
-                break;
+                break;*/
             case R.id.course:
                 startActivity(new Intent(this,CourseActivity.class));
                 break;
@@ -349,19 +352,19 @@ public class MainActivity extends Activity
         if (requestCode == REQUEST_CODE) {
             this.recreate();
         }
-        fb.authorizeCallback(requestCode, resultCode, intent);
+        //fb.authorizeCallback(requestCode, resultCode, intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem post = menu.findItem(R.id.post_facebook);
-        if(fb.isSessionValid()){
+       // MenuItem post = menu.findItem(R.id.post_facebook);
+       /* if(fb.isSessionValid()){
             post.setVisible(false);
         }else{
             post.setVisible(true);
-        }
+        }*/
 
         return true;
     }

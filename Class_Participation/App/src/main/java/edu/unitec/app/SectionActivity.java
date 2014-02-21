@@ -38,15 +38,9 @@ public class SectionActivity extends Activity
     }
 
 
-    public void onclickItem(MenuItem item)
+    /*public void onclickItem(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-            case R.id.save:
-                saveSection();
-                break;
-        }
-    }
+    }*/
 
     public void loadYears()
     {
@@ -190,10 +184,13 @@ public class SectionActivity extends Activity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         switch (item.getItemId()) {
             case android.R.id.home:
                onBackPressed();
                 return true;
+            case R.id.save:
+                saveSection();
             default:
                 return super.onOptionsItemSelected(item);
         }

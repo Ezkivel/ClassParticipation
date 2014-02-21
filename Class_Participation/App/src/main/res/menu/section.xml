@@ -5,7 +5,7 @@
     <item
         android:id="@+id/save"
         android:title="@string/save_course"
-        android:onClick="onclickItem"
+
         android:showAsAction="always"
         android:icon="@drawable/ic_action_save"/>
 

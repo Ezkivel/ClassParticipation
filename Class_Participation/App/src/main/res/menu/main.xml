@@ -6,22 +6,19 @@
     <item
         android:id="@+id/course"
         android:title="@string/courses"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:onClick="onclickItem"/>
+        android:orderInCategory="100"/>
+       # android:onClick="onclickItem"/>
 
     <item
         android:id="@+id/section"
         android:title="@string/sections"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:onClick="onclickItem"/>
+        android:orderInCategory="100"/>
+        #android:onClick="onclickItem"/>
 
     <item
         android:id="@+id/about"
         android:title="@string/abouts"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:onClick="onclickItem"/>
+        android:orderInCategory="100"/>
+        #android:onClick="onclickItem"/>
 
 </menu>

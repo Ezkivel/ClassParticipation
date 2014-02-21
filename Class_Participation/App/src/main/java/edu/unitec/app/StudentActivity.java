@@ -67,23 +67,19 @@ public class StudentActivity extends Activity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.student, menu);
-
         MenuItem save_student = menu.findItem(R.id.item_addStudent);
         MenuItem save_students = menu.findItem(R.id.save_students);
         MenuItem newParticipation = menu.findItem(R.id.item_newParticipation);
-
         if(!getCurrentStudentNamesList().isEmpty() ){
             save_student.setVisible(true);
             save_students.setVisible(false);
             newParticipation.setVisible(true);
         }
-
         else {
             save_student.setVisible(false);
             save_students.setVisible(true);
             newParticipation.setVisible(false);
         }
-
         return true;
     }
 
@@ -94,37 +90,38 @@ public class StudentActivity extends Activity
         // as you specify a parent activity in AndroidManifest.xml.
         //startActivity(new Intent(this,MainActivity.class));
         switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void onclickItem(MenuItem item) {
-        switch (item.getItemId()) {
             case R.id.item_addStudent:
                 showAddStudentDialog();
-                break;
+                return true;
             case  R.id.save_students:
-                //import excel
                 Intent chooseFile;
                 Intent intent;
                 chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
                 chooseFile.setType("file/*");
                 intent = Intent.createChooser(chooseFile, "Choose a file");
                 startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
-                break;
+                return true;
             case R.id.item_newParticipation:
                 showParticipationDialog();
-                break;
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+
     }
+
+
+    /*public void onclickItem(MenuItem item) {
+
+    }*/
 
     public void update(){
         this.recreate();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {

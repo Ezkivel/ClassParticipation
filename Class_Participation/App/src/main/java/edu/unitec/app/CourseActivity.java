@@ -28,7 +28,23 @@ public class CourseActivity extends Activity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-    public void onclickItem(MenuItem item) {
+    //public void onclickItem(MenuItem item) {
+
+    //}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.course, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
         EditText course_code = (EditText) findViewById(R.id.editTextCourse_code);
         EditText course_name = (EditText) findViewById(R.id.editTextCourse_name);
         EditText course_description = (EditText) findViewById(R.id.editTextCourse_description);
@@ -40,9 +56,9 @@ public class CourseActivity extends Activity {
         switch ( item.getItemId() ) {
             case R.id.save:
                 try{
-                     course_cod = course_code.getText().toString();
-                     course_nam = course_name.getText().toString();
-                     course_des = course_description.getText().toString();
+                    course_cod = course_code.getText().toString();
+                    course_nam = course_name.getText().toString();
+                    course_des = course_description.getText().toString();
                 }catch (NullPointerException ignored){
                 }
 
@@ -93,30 +109,12 @@ public class CourseActivity extends Activity {
                         imm.showSoftInput(((EditText)findViewById(R.id.editTextCourse_description)), InputMethodManager.SHOW_IMPLICIT);
                     }
                 }
-                break;
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.course, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //startActivity(new Intent(this, MainActivity.class));
-        switch (item.getItemId()) {
+                return true;
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 }
